@@ -388,7 +388,7 @@
         →
       </button>
       
-      <!-- Průvodce areálem -->
+      <!-- Průvodce areálem (pod nápojovým lístkem) -->
       <button class="menu-btn" onclick="switchSection('map', 'next')">
         <span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -530,8 +530,9 @@
     </div>
     <div class="info-card">
       <h3>Užitečná info</h3>
-      <p><strong>Check in:</strong> Klíče od pokojů budou k vyzvednutí na recepci od XX:XX hodin.<br>
-      <strong>Check out:</strong> Klíče od pokojů prosím vraťte na recepci do 11:00 hodin.</p>
+      <p style="margin-bottom: 8px;">🗝️ <strong>Check-in:</strong> Klíče od pokojů budou k vyzvednutí na recepci od 11:00 hodin, kam si můžete zároveň odložit své věci. Plný přístup do pokojů bude možný až od 16:00 hodin.</p>
+      <p style="margin-bottom: 8px;">🧳 <strong>Check-out:</strong> Klíče od pokojů prosím vraťte na recepci v neděli do 11:00 hodin.<br>Nezapomeňte také uhradit svou útratu na baru.</p>
+      <p style="margin: 0; text-align: center; font-weight: 600; color: var(--blue-light);">❤️ Děkujeme!</p>
     </div>
   </div>
 
@@ -834,6 +835,10 @@
         <span>Pohyb a zábava</span>
         →
       </button>
+      <button class="menu-btn" onclick="switchSubSection('sub-contacts')">
+        <span>Kontakty</span>
+        →
+      </button>
     </div>
   </div>
 
@@ -999,6 +1004,27 @@
 
         <p style="margin: 0;">Hráči se střídají v hodech. Po každém kole se body sečtou a rozdíl bodů získá hráč/tým s vyšším skóre. Vyhrává hráč nebo tým, který jako první dosáhne 21 bodů.</p>
       </div>
+    </div>
+  </div>
+
+  <!-- 6.6 KONTAKTY -->
+  <div id="sub-contacts-section" class="section-content">
+    <button class="btn-back" onclick="switchSection('info', 'back')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Kontakty</h2>
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="info-card" style="text-align: center;">
+      <p style="margin-bottom: 12px; font-size: 15px;">
+        <strong>Lukáš</strong><br>
+        <a href="tel:+420730549350" style="color: var(--blue-light); text-decoration: none; font-weight: 600;">+420 730 549 350</a>
+      </p>
+      <p style="margin: 0;">
+        ig: <a href="https://www.instagram.com/leskyxx/" target="_blank" rel="noopener noreferrer" style="color: var(--blue-accent); text-decoration: none; font-weight: 600;">
+          📸 Instagram
+        </a>
+      </p>
     </div>
   </div>
 
