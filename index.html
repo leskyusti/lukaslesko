@@ -676,10 +676,10 @@
       </ul>
     </div>
 
-    <!-- Okénko Bar Budget s upraveným textem -->
+    <!-- Okénko Bar Budget s aktualizovaným textem -->
     <div class="info-card" style="border: 1.5px solid rgba(77, 166, 255, 0.4); background: rgba(5, 15, 26, 0.85);">
       <h3 style="justify-content: center; color: var(--blue-light); margin-bottom: 8px; text-align: center;">🍹 BAR BUDGET</h3>
-      <p style="text-align: center; margin-bottom: 10px;">Prvních 10 000 Kč na baru je na nás! (každý cca 2 drinky)<br>Až se budget vyčerpá, žezlo přebírá vaše peněženka. 😂</p>
+      <p style="text-align: center; margin-bottom: 10px;">Prvních 10 000 Kč na baru je na nás!<br>(každý cca 2 drinky)<br>Až se budget vyčerpá, žezlo přebírá vaše peněženka. 😂</p>
       <p style="text-align: center; font-size: 12.5px; opacity: 0.9; border-top: 1px dashed rgba(77, 166, 255, 0.2); padding-top: 8px; margin-top: 8px;">
         Platit na baru lze POUZE v hotovosti. Útratu lze také psát na virtuální lístek na číslo Vašeho pokoje, který zaplatíte druhý den ráno při odevzdávání klíčů na recepci.
       </p>
@@ -772,6 +772,14 @@
         <span>Dresscode</span>
         →
       </button>
+      <button class="menu-btn" onclick="switchSubSection('sub-ceremony')">
+        <span>Obřad</span>
+        →
+      </button>
+      <button class="menu-btn" onclick="switchSubSection('sub-photos')">
+        <span>Fotografování / natáčení videa</span>
+        →
+      </button>
       <button class="menu-btn" onclick="switchSubSection('sub-parking')">
         <span>Kde zaparkovat</span>
         →
@@ -800,7 +808,84 @@
     </div>
   </div>
 
-  <!-- 6.2 PARKOVÁNÍ -->
+  <!-- 6.2 PODSEKCE: OBŘAD -->
+  <div id="sub-ceremony-section" class="section-content">
+    <button class="btn-back" onclick="switchSection('info', 'back')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Obřad</h2>
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="info-card">
+      <h3 style="text-align: center; margin-bottom: 10px;">📵 Během obřadu prosíme bez mobilů</h3>
+      <p style="margin-bottom: 10px;">Milí hosté,</p>
+      <p style="margin-bottom: 10px;">máme na vás malou prosbu – během obřadu prosím nefotografujte ani nenatáčejte na mobilní telefony. ❤️</p>
+      <p style="margin-bottom: 10px;">Na svatbě máme našeho fotografa, který se postará o všechny důležité okamžiky. Kdyby se v uličkách objevily desítky mobilů, mohlo by to pokazit jeho záběry a hlavně naše vzpomínky na tento okamžik. 📸</p>
+      <p style="margin-bottom: 10px;">Po obřadu ale mobilní telefony směle vytáhněte! 😄</p>
+      <p style="margin-bottom: 10px;">Foťte, natáčejte, sdílejte a spamujte nás fotkami, co to jen půjde. Po obřadu je focení povinné! 😂❤️</p>
+      <p style="margin-top: 12px; font-weight: 600; text-align: center;">Děkujeme, že si obřad užijete s námi naplno – bez mobilu v ruce. 🥰</p>
+    </div>
+  </div>
+
+  <!-- 6.3 PODSEKCE: FOTOGRAFOVÁNÍ / NATÁČENÍ VIDEA -->
+  <div id="sub-photos-section" class="section-content">
+    <button class="btn-back" onclick="switchSection('info', 'back')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Fotografování / natáčení videa</h2>
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="info-card" style="text-align: center; margin-bottom: 12px;">
+      <h3 style="justify-content: center; text-transform: uppercase; margin-bottom: 6px;">Jeden fotograf vše nezachytí</h3>
+      <p style="text-align: center; font-size: 13px; font-weight: 600; color: var(--blue-light);">Pomozte nám uchovat vzpomínky i z vašeho pohledu</p>
+      
+      <ul style="list-style: none; padding: 0; margin: 14px 0 0 0; text-align: center; font-size: 13.5px;">
+        <li style="margin-bottom: 6px;">Otevřete fotoaparát ve svém telefonu</li>
+        <li style="margin-bottom: 6px;">Namiřte jej na odkaz níže</li>
+        <li style="margin-bottom: 6px;">Klepněte na zobrazený odkaz</li>
+        <li style="margin-bottom: 6px;">Otevře se sdílená složka Google Fotky</li>
+        <li style="margin-bottom: 6px;">Klikněte na tlačítko ,,Přidat fotky''</li>
+        <li style="margin-bottom: 6px;">Vyberte fotografie a videa, která chcete přidat</li>
+        <li>Potvrďte nahrání a je HOTOVO!</li>
+      </ul>
+    </div>
+
+    <!-- Tlačítko na Google Disk -->
+    <div style="margin-bottom: 14px; text-align: center;">
+      <a href="https://photos.app.goo.gl/GHBBxrnJ9uDAP6LR7" target="_blank" class="menu-btn highlight" style="justify-content: center; text-decoration: none; display: flex; align-items: center;">
+        <span>👉 Otevřít Google Disk s fotkami</span>
+      </a>
+    </div>
+
+    <div class="info-card" style="margin-bottom: 12px;">
+      <h3 style="margin-bottom: 8px;">📸 Sdílejte s námi vaše fotky a videa!</h3>
+      <p style="margin-bottom: 8px;">Máte z naší svatby fotku nebo video, které by nám nemělo uniknout? Pošlete nám ho! ❤️</p>
+      <p style="margin-bottom: 8px;">Vytvořil jsem společný Google Disk, kam můžete nahrát všechny své povedené (i nepovedené 😄) fotky a videa ze svatby.</p>
+      <p style="margin-bottom: 8px;">Čím víc vzpomínek od vás budeme mít, tím lépe! 🥰</p>
+      <p style="margin: 0; font-weight: 600;">Děkujeme, že s námi budete sdílet náš velký den. ❤️</p>
+    </div>
+
+    <div class="info-card">
+      <h3 style="margin-bottom: 8px;">📱 Návod pro ty, kteří si s Google Diskem úplně netykají 😄</h3>
+      <p style="margin-bottom: 6px;">1. Klikněte na odkaz na Google Disk výše.</p>
+      <p style="margin-bottom: 6px;">2. Otevře se vám složka s našimi svatebními fotkami a videi.</p>
+      <p style="margin-bottom: 6px;">3. Najděte tlačítko „+ Nový“ nebo „Nahrát soubory“.</p>
+      <p style="margin-bottom: 6px;">4. Vyberte z telefonu nebo počítače fotky a videa, které chcete sdílet.</p>
+      <p style="margin-bottom: 8px;">5. Chvilku počkejte, než se soubory nahrají. U větších videí to může chvíli trvat.</p>
+      <p style="margin-bottom: 10px; font-weight: 600; color: var(--text-pure);">A je to! 🎉 Fotky se automaticky objeví ve společné složce a my se k nim později dostaneme.</p>
+      
+      <p style="margin-bottom: 6px; font-weight: 600; color: var(--blue-light);">📱 Pokud nahráváte z mobilu:</p>
+      <p style="margin-bottom: 8px;">Po otevření odkazu můžete být vyzváni k přihlášení ke Google účtu. Pokud ho nemáte, dejte nám vědět – vymyslíme jiný způsob, jak nám vaše poklady dostat. 😄</p>
+      
+      <p style="margin-bottom: 10px; font-size: 12.5px; background: rgba(77,166,255,0.1); padding: 8px; border-radius: 6px;">
+        💡 <strong>Tip:</strong> Klidně nahrajte i fotky, které už máte na Instagramu nebo Facebooku. Originály z telefonu jsou ale ještě lepší! 📸❤️
+      </p>
+
+      <p style="text-align: center; font-weight: 700; margin-top: 12px; color: var(--text-pure); letter-spacing: 0.05em;">D Ě K U J E M E !</p>
+    </div>
+  </div>
+
+  <!-- 6.4 PARKOVÁNÍ -->
   <div id="sub-parking-section" class="section-content">
     <button class="btn-back" onclick="switchSection('info', 'back')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -819,7 +904,7 @@
     </div>
   </div>
 
-  <!-- 6.3 POHYB A ZÁBAVA -->
+  <!-- 6.5 POHYB A ZÁBAVA -->
   <div id="sub-movement-section" class="section-content">
     <button class="btn-back" onclick="switchSection('info', 'back')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
