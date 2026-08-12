@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+<!-- 🚀 Podpora plnoobrazovkového režimu pro Android & iOS -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+
+<!-- 🌙 Vynucení Dark Modu a barvy lišty pro Android/iOS -->
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#06121e">
+
+<title>Lukáš a Barbora — Svatební rozcestník</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Work+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-main: #06121e;
+    --card-start: #0f2338;
+    --card-end: #091726;
+    
+    --blue-accent: #4da6ff;
+    --blue-bright: #1a8cff;
+    --blue-light: #d6eeff;
+    --blue-glow: rgba(77, 166, 255, 0.4);
+    
+    --text-pure: #ffffff;
+    --text-bright: #f0f7fc;
+    --text-sub: #d0e4f5;
+    
+    --sat-top: env(safe-area-inset-top, 0px);
+    --sat-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  * { 
+    box-sizing: border-box; 
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    color-scheme: dark;
+    margin: 0; padding: 0;
+    width: 100%; min-height: 100%;
+    background-color: var(--bg-main);
+    background:
+      radial-gradient(1.5px 1.5px at center, rgba(77, 166, 255, 0.25) 1px, transparent 1.5px) 0 0/28px 28px,
+      radial-gradient(120% 120% at 50% 0%, #132e4a 0%, var(--bg-main) 70%);
+    background-attachment: fixed;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  body {
+    margin: 0;
+    padding: calc(30px + var(--sat-top)) 16px calc(50px + var(--sat-bottom));
+    width: 100%; min-height: 100vh; min-height: 100dvh;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Work Sans', system-ui, -apple-system, sans-serif;
+    color: var(--text-bright);
+    background: transparent;
+  }
+
+  .invitation {
+    position: relative;
+    width: 100%; max-width: 440px;
+    background: linear-gradient(165deg, var(--card-start), var(--card-end) 85%);
+    border-radius: 20px;
+    padding: 32px 20px 28px;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 0 1.5px rgba(77, 166, 255, 0.35);
+  }
+
+  .invitation::before {
+    content: ""; position: absolute; inset: 8px;
+    border: 1.5px solid rgba(77, 166, 255, 0.25);
+    border-radius: 14px; pointer-events: none;
+  }
+
+  /* Tlačítko zpět uvnitř sekcí */
+  .btn-back {
+    position: absolute; top: 20px; left: 20px;
+    width: 38px; height: 38px;
+    background-color: rgba(77, 166, 255, 0.1);
+    border: 1px solid rgba(77, 166, 255, 0.3);
+    border-radius: 50%;
+    color: var(--blue-accent);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 10;
+  }
+  .btn-back:active { background-color: rgba(77, 166, 255, 0.2); transform: scale(0.95); }
+  .btn-back svg { width: 18px; height: 18px; display: block; }
+
+  .emblem {
+    width: 64px; margin: 0 auto 12px;
+    filter: drop-shadow(0 0 8px rgba(77, 166, 255, 0.5));
+  }
+  .emblem svg { display: block; width: 100%; height: auto; }
+  .ring { fill: none; stroke: var(--blue-accent); stroke-width: 2.4; }
+
+  .eyebrow {
+    margin: 0 0 4px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-weight: 700; font-size: 18px;
+    letter-spacing: 0.05em; color: var(--blue-accent);
+  }
+
+  .title {
+    margin: 0 0 6px;
+    font-family: 'Cormorant Garamond', serif; font-weight: 700;
+    font-size: clamp(28px, 7vw, 34px);
+    color: var(--text-pure); letter-spacing: 0.01em; line-height: 1.15;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  }
+
+  .date-sub {
+    font-size: 13px; font-weight: 600; color: var(--blue-light);
+    letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px;
+    opacity: 0.9;
+  }
+
+  .divider {
+    width: 80px; height: 2px; margin: 0 auto 20px;
+    background: linear-gradient(90deg, transparent, var(--blue-accent), transparent);
+    position: relative;
+  }
+  .divider::after {
+    content: ""; position: absolute; left: 50%; top: 50%;
+    width: 5px; height: 5px; background: var(--blue-accent);
+    transform: translate(-50%,-50%) rotate(45deg);
+    box-shadow: 0 0 6px var(--blue-accent);
+  }
+
+  /* Hlavní menu (Rozcestník) */
+  .menu-grid {
+    display: flex; flex-direction: column; gap: 12px;
+  }
+
+  .menu-btn {
+    width: 100%; min-height: 52px; padding: 12px 18px;
+    background: rgba(5, 15, 26, 0.65);
+    color: var(--text-bright);
+    border: 1.5px solid rgba(77, 166, 255, 0.3);
+    border-radius: 12px;
+    font-family: 'Work Sans', sans-serif; font-size: 15px;
+    font-weight: 700; letter-spacing: 0.04em;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  .menu-btn span { display: flex; align-items: center; gap: 10px; }
+  .menu-btn svg { width: 18px; height: 18px; color: var(--blue-accent); }
+  .menu-btn:active { transform: scale(0.98); background: rgba(77, 166, 255, 0.15); border-color: var(--blue-accent); }
+
+  .menu-btn.highlight {
+    background: linear-gradient(180deg, #4da6ff, #1a8cff);
+    color: #ffffff; border: none;
+    box-shadow: 0 6px 20px rgba(26, 140, 255, 0.4);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+  .menu-btn.highlight svg { color: #ffffff; }
+
+  /* Sekce obsahu (skryté přepínání) */
+  .section-content {
+    display: none; text-align: left; animation: fadeIn 0.3s ease;
+  }
+  .section-content.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 24px;
+    font-weight: 700; color: var(--text-pure); margin: 0 0 16px;
+    text-align: center;
+  }
+
+  /* Harmonogram položky */
+  .timeline {
+    position: relative; padding-left: 20px; margin-left: 4px;
+    border-left: 2px solid rgba(77, 166, 255, 0.3);
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .timeline-item { position: relative; }
+  .timeline-item::before {
+    content: ""; position: absolute; left: -25.5px; top: 4px;
+    width: 9px; height: 9px; background: var(--blue-accent);
+    border-radius: 50%; box-shadow: 0 0 8px var(--blue-glow);
+  }
+  .t-time { font-size: 12px; font-weight: 800; color: var(--blue-accent); letter-spacing: 0.05em; text-transform: uppercase; }
+  .t-title { font-size: 15px; font-weight: 700; color: var(--text-pure); margin: 2px 0; }
+  .t-desc { font-size: 13.5px; color: var(--text-sub); margin: 0; line-height: 1.4; }
+
+  /* Karta míst / ubytování */
+  .info-card {
+    background: rgba(5, 15, 26, 0.65);
+    border: 1px solid rgba(77, 166, 255, 0.25);
+    border-radius: 10px; padding: 14px; margin-bottom: 10px;
+  }
+  .info-card h3 { margin: 0 0 4px; font-size: 15px; font-weight: 700; color: var(--blue-light); display: flex; justify-content: space-between; align-items: center; }
+  .info-card p { margin: 0; font-size: 13.5px; color: var(--text-sub); line-height: 1.4; }
+  
+  .badge {
+    font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 6px;
+    background: rgba(77, 166, 255, 0.15); color: var(--blue-accent);
+  }
+
+  .footer-left {
+    position: fixed; left: 16px; bottom: 12px;
+    font-size: 11px; font-weight: 500; color: rgba(208, 228, 245, 0.4);
+    letter-spacing: 0.05em; pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="invitation">
+  
+  <!-- HLAVNÍ ROZCESTNÍK -->
+  <div id="home-section" class="section-content active">
+    <div class="emblem">
+      <svg viewBox="0 0 120 60">
+        <circle class="ring" cx="45" cy="30" r="21"/>
+        <circle class="ring" cx="75" cy="30" r="21"/>
+      </svg>
+    </div>
+    <p class="eyebrow">Svatební víkend</p>
+    <h1 class="title">Lukáš & Barbora</h1>
+    <div class="date-sub">15. 6. 2026</div>
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="menu-grid">
+      <button class="menu-btn" onclick="showSection('schedule')">
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Časový harmonogram
+        </span>
+        →
+      </button>
+      
+      <button class="menu-btn" onclick="showSection('map')">
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Co se kde nachází
+        </span>
+        →
+      </button>
+
+      <button class="menu-btn" onclick="showSection('sleep')">
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11m18-11v11M3 11h18M5 7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4H5V7z"/></svg>
+          Kdo kde spí
+        </span>
+        →
+      </button>
+
+      <!-- Odkaz na tvůj stávající kvíz -->
+      <button class="menu-btn highlight" onclick="window.location.href='kviz.html'">
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Svatební kvíz & Tajné heslo
+        </span>
+        →
+      </button>
+    </div>
+  </div>
+
+  <!-- 1. HARMONOGRAM -->
+  <div id="schedule-section" class="section-content">
+    <button class="btn-back" onclick="showSection('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Harmonogram</h2>
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="t-time">11:30</div>
+        <div class="t-title">Sraz hostů</div>
+        <p class="t-desc">Uvítání, usazení a malé občerstvení před obřadem.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">13:00</div>
+        <div class="t-title">Svatební obřad</div>
+        <p class="t-desc">Sliby, prstýnky a vaše první slzy dojetí.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">14:00</div>
+        <div class="t-title">Společné focení & Oběd</div>
+        <p class="t-desc">Svatební hostina pro rodinu a přátele.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">16:30</div>
+        <div class="t-title">Krájení dortu & Kvíz</div>
+        <p class="t-desc">Otevření baru a spuštění svatebního kvízu!</p>
+      </div>
+      <div class="timeline-item">
+        <div class="t-time">19:00</div>
+        <div class="t-title">První tanec & Party</div>
+        <p class="t-desc">Zábava, tanec a DJ až do ranních hodin.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. CO SE KDE NACHÁZÍ -->
+  <div id="map-section" class="section-content">
+    <button class="btn-back" onclick="showSection('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Areál statku</h2>
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="info-card">
+      <h3>Hlavní sólo <span class="badge">Kulturák</span></h3>
+      <p>Místo hostiny, večerní party a hlavního dění.</p>
+    </div>
+    <div class="info-card">
+      <h3>Zahrada pod břízou <span class="badge">Obřad</span></h3>
+      <p>Prostor, kde proběhne samotný oddavkový ceremoniál.</p>
+    </div>
+    <div class="info-card">
+      <h3>Bar u Parketu <span class="badge">Drinks</span></h3>
+      <p>Tady platí <strong>tajné heslo</strong> z kvízu na drink zdarma! 🍹</p>
+    </div>
+    <div class="info-card">
+      <h3>Dětský koutek <span class="badge">Klugi</span></h3>
+      <p>Zahradní domek s hračkami a hlídáním.</p>
+    </div>
+  </div>
+
+  <!-- 3. KDO KDE SPÍ -->
+  <div id="sleep-section" class="section-content">
+    <button class="btn-back" onclick="showSection('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Ubytování hostů</h2>
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="info-card">
+      <h3>Hlavní budova (Penzion)</h3>
+      <p>Rodina, svědkové a hlavní VIP hosté (pokoje č. 1 – 6).</p>
+    </div>
+    <div class="info-card">
+      <h3>Zahradní chatky</h3>
+      <p>Kamarádi a mladší generace (Chatky A1 až A5).</p>
+    </div>
+    <div class="info-card">
+      <h3>Užitečná info</h3>
+      <p>Klíče od pokojů budou k vyzvednutí na recepci od 14:00. Odjezd do 10:00 druhý den.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-left">© 2026 Lukáš Lesko</div>
+
+<script>
+  function showSection(sectionId) {
+    document.querySelectorAll('.section-content').forEach(el => {
+      el.classList.remove('active');
+    });
+    document.getElementById(sectionId + '-section').classList.add('active');
+  }
+</script>
+
+</body>
+</html>
