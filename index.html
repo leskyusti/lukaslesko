@@ -215,7 +215,7 @@
     border: 1px solid rgba(77, 166, 255, 0.25);
     border-radius: 10px; padding: 14px; margin-bottom: 10px;
   }
-  .info-card h3 { margin: 0 0 6px; font-size: 15px; font-weight: 700; color: var(--blue-light); display: flex; justify-content: space-between; align-items: center; }
+  .info-card h3 { margin: 0 0 6px; font-size: 15px; font-weight: 700; color: var(--blue-light); }
   .info-card p { margin: 0; font-size: 13.5px; color: var(--text-sub); line-height: 1.4; }
   .info-card ul { margin: 6px 0 0 16px; padding: 0; font-size: 13.5px; color: var(--text-sub); line-height: 1.4; }
   .info-card li { margin-bottom: 4px; }
@@ -228,11 +228,6 @@
     margin-top: 8px;
     margin-bottom: 8px;
     border: 1px solid rgba(77, 166, 255, 0.3) !important;
-  }
-  
-  .badge {
-    font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 6px;
-    background: rgba(77, 166, 255, 0.15); color: var(--blue-accent);
   }
 
   .footer-left {
@@ -305,7 +300,6 @@
         →
       </button>
       
-      <!-- Změněno z "Co se kde nachází" na "Průvodce areálem" -->
       <button class="menu-btn" onclick="switchSection('map', 'next')">
         <span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -370,7 +364,7 @@
     </div>
   </div>
 
-  <!-- 2. PRŮVODCE AREÁLEM (PŮVODNĚ CO SE KDE NACHÁZÍ) -->
+  <!-- 2. PRŮVODCE AREÁLEM -->
   <div id="map-section" class="section-content">
     <button class="btn-back" onclick="switchSection('home', 'back')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -379,19 +373,19 @@
     <div class="divider" aria-hidden="true"></div>
 
     <div class="info-card">
-      <h3>Velký stan na zahradě <span class="badge">Hostina</span></h3>
+      <h3>Velký stan na zahradě</h3>
       <p>Místo hostiny, večerní party a hlavního dění.</p>
     </div>
     <div class="info-card">
-      <h3>Střed zahrady <span class="badge">Obřad</span></h3>
+      <h3>Střed zahrady</h3>
       <p>Prostor, kde proběhne samotný oddavací ceremoniál.</p>
     </div>
     <div class="info-card">
-      <h3>Bar vedle stanu (domeček) <span class="badge">Drinks</span></h3>
+      <h3>Bar vedle stanu (domeček)</h3>
       <p>Místo, kde se můžete občerstvit nějakým drinkem.<br>Tady platí <strong>tajné heslo</strong> z kvízu na drink zdarma! 🍹</p>
     </div>
     <div class="info-card">
-      <h3>Skleněné kopule <span class="badge">Kluby</span></h3>
+      <h3>Skleněné kopule</h3>
       <p>Pánský a Dámský klub</p>
     </div>
   </div>
@@ -405,15 +399,15 @@
     <div class="divider" aria-hidden="true"></div>
 
     <div class="info-card">
-      <h3>Hlavní budova Hotelu Racek <span class="badge">Hotel</span></h3>
+      <h3>Hlavní budova Hotelu Racek</h3>
       <p>Rodina X, Rodina Y, Rodina Z</p>
     </div>
     <div class="info-card">
-      <h3>Horní Strakův Mlýn <span class="badge">Mlýn</span></h3>
+      <h3>Horní Strakův Mlýn</h3>
       <p>Kamarádi a mladší generace</p>
     </div>
     <div class="info-card">
-      <h3>Užitečná info <span class="badge">Detaily</span></h3>
+      <h3>Užitečná info</h3>
       <p><strong>Check in:</strong> Klíče od pokojů budou k vyzvednutí na recepci od XX:XX hodin.<br>
       <strong>Check out:</strong> Klíče od pokojů prosím vraťte na recepci do 11:00 hodin.</p>
     </div>
@@ -427,25 +421,65 @@
     <h2 class="section-title" style="margin-top: 6px;">Důležité informace</h2>
     <div class="divider" aria-hidden="true"></div>
 
+    <!-- Podmenu uvnitř Důležitých informací -->
+    <div class="menu-grid" style="margin-top: 10px;">
+      <button class="menu-btn" onclick="switchSubSection('sub-dresscode')">
+        <span>Dresscode</span>
+        →
+      </button>
+      <button class="menu-btn" onclick="switchSubSection('sub-parking')">
+        <span>Kde zaparkovat</span>
+        →
+      </button>
+      <button class="menu-btn" onclick="switchSubSection('sub-movement')">
+        <span>Pohyb a zábava</span>
+        →
+      </button>
+    </div>
+  </div>
+
+  <!-- 4.1 PODSEKCE: DRESSCODE -->
+  <div id="sub-dresscode-section" class="section-content">
+    <button class="btn-back" onclick="switchSection('info', 'back')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Dresscode</h2>
+    <div class="divider" aria-hidden="true"></div>
+
     <div class="info-card">
-      <h3>Dresscode <span class="badge">Styl</span></h3>
       <p>Black Tie / Cocktail / Formal nejlépe ve světle modré (baby blue) či jiných odstínech modré.</p>
       <ul>
         <li><strong>Páni:</strong> Klasický černý/modrý formální oblek, bílá/modrá košile, modrá kravata nebo motýlek (modrý doplněk).</li>
         <li><strong>Dámy:</strong> Šaty nejlépe ve světle modré (baby blue) či v jiných odstínech modré (dlouhé večerní šaty / koktejlky / vzdušné šaty) nebo oblek či kostýmek po vzoru mužských podmínek výše uvedených.</li>
       </ul>
     </div>
+  </div>
+
+  <!-- 4.2 PODSEKCE: PARKOVÁNÍ -->
+  <div id="sub-parking-section" class="section-content">
+    <button class="btn-back" onclick="switchSection('info', 'back')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Kde zaparkovat</h2>
+    <div class="divider" aria-hidden="true"></div>
 
     <div class="info-card">
-      <h3>Kde zaparkovat <span class="badge">Auto</span></h3>
       <p>Parkujte u budovy <strong>"Horní Strakův mlýn"</strong> mapa zde:</p>
       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2292.618328211717!2d14.325881741815014!3d50.58204011534066!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47097b00021764cf%3A0x19219e3c2e2c68d1!2zSG9ybsOtIFN0cmFrxa92IG1sw71u!5e1!3m2!1scs!2scz!4v1786534216451!5m2!1scs!2scz" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
       <p>či po vyčerpání kapacity parkoviště před hlavní budovou hotelu Racek mapa zde:</p>
       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2292.618328211717!2d14.325881741815014!3d50.58204011534066!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47097b1958efb507%3A0xdaa65211894e23e9!2sRestaurace%2C%20hotel%20Racek!5e1!3m2!1scs!2scz!4v1786534184109!5m2!1scs!2scz" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
     </div>
+  </div>
+
+  <!-- 4.3 PODSEKCE: POHYB A ZÁBAVA -->
+  <div id="sub-movement-section" class="section-content">
+    <button class="btn-back" onclick="switchSection('info', 'back')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Pohyb a zábava</h2>
+    <div class="divider" aria-hidden="true"></div>
 
     <div class="info-card">
-      <h3>Pohyb a zábava <span class="badge">Areál</span></h3>
       <ul>
         <li>Pohyb osob je povolen v celém areálu / zahradě hotelu.</li>
         <li>Koupání se v přírodních biotopech je <strong>POVOLENO</strong>. (Plavky s sebou :D)</li>
@@ -573,6 +607,10 @@
       void targetSection.offsetWidth;
       targetSection.classList.remove(inClass);
     }, 400);
+  }
+
+  function switchSubSection(subId) {
+    switchSection(subId, 'next');
   }
 
   function openQuiz() {
