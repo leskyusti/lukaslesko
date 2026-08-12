@@ -330,6 +330,14 @@
         →
       </button>
 
+      <button class="menu-btn" onclick="switchSection('seating', 'next')">
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19h16M4 15h16M6 15V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v10"/></svg>
+          Zasedací pořádek
+        </span>
+        →
+      </button>
+
       <!-- Odkaz na svatební kvíz -->
       <button class="menu-btn highlight" onclick="openQuiz()">
         <span>
@@ -442,7 +450,175 @@
     </div>
   </div>
 
-  <!-- 4. DŮLEŽITÉ INFORMACE -->
+  <!-- 4. ZASEDACÍ POŘÁDEK -->
+  <div id="seating-section" class="section-content">
+    <button class="btn-back" onclick="switchSection('home', 'back')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Zasedací pořádek</h2>
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="menu-grid" style="margin-top: 10px;">
+      <button class="menu-btn" onclick="switchSubSection('sub-table1')">
+        <span>Stůl 1</span>
+        →
+      </button>
+      <button class="menu-btn" onclick="switchSubSection('sub-table2')">
+        <span>Stůl 2</span>
+        →
+      </button>
+      <button class="menu-btn" onclick="switchSubSection('sub-table3')">
+        <span>Stůl 3</span>
+        →
+      </button>
+      <button class="menu-btn" onclick="switchSubSection('sub-table4')">
+        <span>Stůl 4</span>
+        →
+      </button>
+      <button class="menu-btn" onclick="switchSubSection('sub-table5')">
+        <span>Stůl 5</span>
+        →
+      </button>
+      <button class="menu-btn" onclick="switchSubSection('sub-table6')">
+        <span>Stůl 6</span>
+        →
+      </button>
+    </div>
+  </div>
+
+  <!-- 4.1 STŮL 1 -->
+  <div id="sub-table1-section" class="section-content">
+    <button class="btn-back" onclick="switchSection('seating', 'back')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Stůl 1.</h2>
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="info-card">
+      <ul>
+        <li>Roman</li>
+        <li>Tereza</li>
+        <li>Jozefína</li>
+        <li>Ingrid</li>
+        <li>Viktor</li>
+        <li>Jana</li>
+        <li>Leona</li>
+        <li>Miroslav</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4.2 STŮL 2 -->
+  <div id="sub-table2-section" class="section-content">
+    <button class="btn-back" onclick="switchSection('seating', 'back')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Stůl 2.</h2>
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="info-card">
+      <ul>
+        <li>Marie</li>
+        <li>Babička Jarmila</li>
+        <li>Markéta</li>
+        <li>Radek</li>
+        <li>Radek</li>
+        <li>Nikola</li>
+        <li>Matěj</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4.3 STŮL 3 -->
+  <div id="sub-table3-section" class="section-content">
+    <button class="btn-back" onclick="switchSection('seating', 'back')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Stůl 3.</h2>
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="info-card">
+      <ul>
+        <li>Jiří</li>
+        <li>Lenka</li>
+        <li>Kristýna</li>
+        <li>Ondřej</li>
+        <li>Jirka</li>
+        <li>Dana</li>
+        <li>Děda Jiří</li>
+        <li>Děda Michal</li>
+        <li>Babička Marcela</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4.4 STŮL 4 -->
+  <div id="sub-table4-section" class="section-content">
+    <button class="btn-back" onclick="switchSection('seating', 'back')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Stůl 4.</h2>
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="info-card">
+      <ul>
+        <li>Eliška B.</li>
+        <li>Andrea</li>
+        <li>Šárka</li>
+        <li>Přemek</li>
+        <li>Barbora</li>
+        <li>Eliška K.</li>
+        <li>Hugo</li>
+        <li>Fotograf</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4.5 STŮL 5 -->
+  <div id="sub-table5-section" class="section-content">
+    <button class="btn-back" onclick="switchSection('seating', 'back')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Stůl 5.</h2>
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="info-card">
+      <ul>
+        <li>Adriana</li>
+        <li>Radka</li>
+        <li>Emma</li>
+        <li>Kristýna</li>
+        <li>Svědek Tomáš</li>
+        <li>Jan</li>
+        <li>Svědkyně Laura</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4.6 STŮL 6 -->
+  <div id="sub-table6-section" class="section-content">
+    <button class="btn-back" onclick="switchSection('seating', 'back')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Stůl 6.</h2>
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="info-card">
+      <ul>
+        <li>Denis</li>
+        <li>Jiří</li>
+        <li>Vojtěch</li>
+        <li>Tomáš P.</li>
+        <li>Tomáš S.</li>
+        <li>Filip</li>
+        <li>Jakub</li>
+        <li>Kryštof</li>
+        <li>Pavel</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 5. DŮLEŽITÉ INFORMACE -->
   <div id="info-section" class="section-content">
     <button class="btn-back" onclick="switchSection('home', 'back')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -467,7 +643,7 @@
     </div>
   </div>
 
-  <!-- 4.1 PODSEKCE: DRESSCODE -->
+  <!-- 5.1 PODSEKCE: DRESSCODE -->
   <div id="sub-dresscode-section" class="section-content">
     <button class="btn-back" onclick="switchSection('info', 'back')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -484,7 +660,7 @@
     </div>
   </div>
 
-  <!-- 4.2 PODSEKCE: PARKOVÁNÍ -->
+  <!-- 5.2 PODSEKCE: PARKOVÁNÍ -->
   <div id="sub-parking-section" class="section-content">
     <button class="btn-back" onclick="switchSection('info', 'back')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -503,7 +679,7 @@
     </div>
   </div>
 
-  <!-- 4.3 PODSEKCE: POHYB A ZÁBAVA -->
+  <!-- 5.3 PODSEKCE: POHYB A ZÁBAVA -->
   <div id="sub-movement-section" class="section-content">
     <button class="btn-back" onclick="switchSection('info', 'back')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
