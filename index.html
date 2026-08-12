@@ -213,7 +213,7 @@
   .info-card ul { margin: 6px 0 0 16px; padding: 0; font-size: 13.5px; color: var(--text-sub); line-height: 1.4; }
   .info-card li { margin-bottom: 4px; }
   
-  /* Stylování pro iframe mapy, aby se vešly do karty a hezky vypadaly */
+  /* Stylování pro iframe mapy */
   .info-card iframe {
     width: 100%;
     height: 180px;
@@ -253,7 +253,7 @@
     <div class="divider" aria-hidden="true"></div>
 
     <div class="menu-grid">
-      <!-- TLAČÍTKO DŮLEŽITÉ INFORMACE NA PRVNÍM MÍSTĚ -->
+      <!-- Důležité informace na prvním místě -->
       <button class="menu-btn" onclick="showSection('info')">
         <span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
@@ -278,10 +278,11 @@
         →
       </button>
 
+      <!-- Změněno z "Kdo kde spí" na "Ubytování" -->
       <button class="menu-btn" onclick="showSection('sleep')">
         <span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v11m18-11v11M3 11h18M5 7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4H5V7z"/></svg>
-          Kdo kde spí
+          Ubytování
         </span>
         →
       </button>
@@ -360,7 +361,7 @@
     </div>
   </div>
 
-  <!-- 3. KDO KDE SPÍ -->
+  <!-- 3. UBYTOVÁNÍ (PŮVODNĚ KDO KDE SPÍ) -->
   <div id="sleep-section" class="section-content">
     <button class="btn-back" onclick="showSection('home')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -369,16 +370,17 @@
     <div class="divider" aria-hidden="true"></div>
 
     <div class="info-card">
-      <h3>Hlavní budova (Penzion)</h3>
-      <p>Rodina, svědkové a hlavní VIP hosté (pokoje č. 1 – 6).</p>
+      <h3>Hlavní budova Hotelu Racek <span class="badge">Hotel</span></h3>
+      <p>Rodina X, Rodina Y, Rodina Z</p>
     </div>
     <div class="info-card">
-      <h3>Zahradní chatky</h3>
-      <p>Kamarádi a mladší generace (Chatky A1 až A5).</p>
+      <h3>Horní Strakův Mlýn <span class="badge">Mlýn</span></h3>
+      <p>Kamarádi a mladší generace</p>
     </div>
     <div class="info-card">
-      <h3>Užitečná info</h3>
-      <p>Klíče od pokojů budou k vyzvednutí na recepci od 14:00. Odjezd do 10:00 druhý den.</p>
+      <h3>Užitečná info <span class="badge">Detaily</span></h3>
+      <p><strong>Check in:</strong> Klíče od pokojů budou k vyzvednutí na recepci od XX:XX hodin.<br>
+      <strong>Check out:</strong> Klíče od pokojů prosím vraťte na recepci do 11:00 hodin.</p>
     </div>
   </div>
 
