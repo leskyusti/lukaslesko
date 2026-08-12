@@ -244,6 +244,36 @@
     border: 1px solid rgba(77, 166, 255, 0.3) !important;
   }
 
+  /* Stylování pro nápojový lístek tabulku */
+  .menu-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    color: var(--text-sub);
+  }
+  .menu-table td {
+    padding: 4px 0;
+    border-bottom: 1px dashed rgba(77, 166, 255, 0.15);
+  }
+  .menu-table td:last-child {
+    text-align: right;
+    font-weight: 600;
+    color: var(--blue-light);
+    white-space: nowrap;
+    padding-left: 8px;
+  }
+  .menu-category-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--blue-light);
+    margin: 14px 0 6px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid rgba(77, 166, 255, 0.3);
+    padding-bottom: 3px;
+  }
+
   .footer-left {
     position: fixed; left: 16px; bottom: 12px;
     font-size: 11px; font-weight: 500; color: rgba(208, 228, 245, 0.4);
@@ -334,6 +364,24 @@
         <span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19h16M4 15h16M6 15V5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v10"/></svg>
           Zasedací pořádek
+        </span>
+        →
+      </button>
+
+      <!-- Svatební hry -->
+      <button class="menu-btn" onclick="switchSection('games', 'next')">
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 12h4m-2-2v4m10-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm-6 4a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/></svg>
+          Svatební hry
+        </span>
+        →
+      </button>
+
+      <!-- Nové tlačítko Nápojový lístek -->
+      <button class="menu-btn" onclick="switchSection('drinks', 'next')">
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3m6-3v3"/></svg>
+          Nápojový lístek
         </span>
         →
       </button>
@@ -590,7 +638,7 @@
         <li>Kristýna</li>
         <li>Svědek Tomáš</li>
         <li>Jan</li>
-        <li>Svědkyně Laura</li>
+        <li>Svědkyně Lindsay</li>
       </ul>
     </div>
   </div>
@@ -618,9 +666,193 @@
     </div>
   </div>
 
-  <!-- 5. DŮLEŽITÉ INFORMACE -->
-  <div id="info-section" class="section-content">
+  <!-- 5. SVATEBNÍ HRY -->
+  <div id="games-section" class="section-content">
     <button class="btn-back" onclick="switchSection('home', 'back')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Svatební hry</h2>
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="menu-grid" style="margin-top: 10px;">
+      <button class="menu-btn" onclick="switchSubSection('sub-game-bouquet')">
+        <span>Kytice</span>
+        →
+      </button>
+      <button class="menu-btn" onclick="switchSubSection('sub-game-bottle')">
+        <span>Flaška</span>
+        →
+      </button>
+      <button class="menu-btn" onclick="switchSubSection('sub-game-tombola')">
+        <span>Svatební tombola</span>
+        →
+      </button>
+    </div>
+  </div>
+
+  <!-- 5.1 HRA: KYTICE -->
+  <div id="sub-game-bouquet-section" class="section-content">
+    <button class="btn-back" onclick="switchSection('games', 'back')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Kytice</h2>
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="info-card">
+      <ul>
+        <li>Radka Ptáčková</li>
+        <li>Laura Němcová</li>
+        <li>Andy Culková</li>
+        <li>Šárka Špatná</li>
+        <li>Barča Nechutová</li>
+        <li>Emma Štětková</li>
+        <li>Týna Štajerová</li>
+        <li>Týna Dandová</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 5.2 HRA: FLAŠKA -->
+  <div id="sub-game-bottle-section" class="section-content">
+    <button class="btn-back" onclick="switchSection('games', 'back')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Flaška</h2>
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="info-card">
+      <ul>
+        <li>Tomáš Lesko</li>
+        <li>Ondra Pavlíček</li>
+        <li>Radek Urban Junior</li>
+        <li>Jirka Danda Junior</li>
+        <li>Honza Adam</li>
+        <li>Přemek Janota</li>
+        <li>Vojta Zámostný</li>
+        <li>Tomáš Prokop</li>
+        <li>Denis Procházka</li>
+        <li>Filip Šubík</li>
+        <li>Jakub Kopecký</li>
+        <li>Kryštof Bivalec</li>
+        <li>Pavel Kasprij</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 5.3 HRA: SVATEBNÍ TOMBOLA -->
+  <div id="sub-game-tombola-section" class="section-content">
+    <button class="btn-back" onclick="switchSection('games', 'back')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Svatební stírací los</h2>
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="info-card" style="text-align: center;">
+      <h3 style="justify-content: center; margin-bottom: 12px; font-size: 16px; text-transform: uppercase;">Pravidla hry</h3>
+      <p style="margin-bottom: 12px;">Stírací los si můžete zakoupit <strong>pouze u svědků</strong></p>
+      <p style="margin-bottom: 12px;">Los lze zakoupit za libovolnou částku</p>
+      <p style="margin-bottom: 16px;">Setři důkladně všechna políčka</p>
+      <div style="border-top: 1px dashed rgba(77, 166, 255, 0.3); padding-top: 12px; margin-top: 12px;">
+        <p style="font-weight: 700; color: var(--text-pure);">Pouze 3 stejné symboly vyhrávají</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. NÁPOJOVÝ LÍSTEK (Nová sekcja) -->
+  <div id="drinks-section" class="section-content">
+    <button class="btn-back" onclick="switchSection('home', 'back')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <h2 class="section-title" style="margin-top: 6px;">Nápojový lístek</h2>
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="info-card" style="border: 1.5px solid var(--blue-accent); background: rgba(77, 166, 255, 0.08);">
+      <h3 style="justify-content: center; color: var(--text-pure); margin-bottom: 8px;">ZDARMA</h3>
+      <ul style="list-style: none; margin: 0; padding: 0; text-align: center;">
+        <li style="margin-bottom: 4px;">Pivo SVIJANY 11°</li>
+        <li style="margin-bottom: 4px;">Prosecco</li>
+        <li style="margin-bottom: 4px;">Limonáda Bezina / Malina</li>
+        <li style="margin-bottom: 4px;">Džus pomeranč / jablko</li>
+        <li>Karafa s vodou + citron</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <div class="menu-category-title" style="margin-top: 0;">Lihoviny 4cl</div>
+      <table class="menu-table">
+        <tr><td>Vodka Finlandia</td><td>69 Kč</td></tr>
+        <tr><td>Beefeater</td><td>79 Kč</td></tr>
+        <tr><td>Metaxa</td><td>79 Kč</td></tr>
+        <tr><td>Jägermeister</td><td>79 Kč</td></tr>
+        <tr><td>Becherovka</td><td>79 Kč</td></tr>
+        <tr><td>Havana rum</td><td>79 Kč</td></tr>
+        <tr><td>Bacardi</td><td>79 Kč</td></tr>
+        <tr><td>Fernet / Citrus</td><td>64 Kč</td></tr>
+        <tr><td>Slivovice Jelínek</td><td>64 Kč</td></tr>
+        <tr><td>Vodka / Rum / Peprmint / Griotka</td><td>54 Kč</td></tr>
+        <tr><td>Slivovice Žufánek</td><td>79 Kč</td></tr>
+        <tr><td>Vaječný likér</td><td>54 Kč</td></tr>
+        <tr><td>Jelzin</td><td>54 Kč</td></tr>
+        <tr><td>Jameson</td><td>79 Kč</td></tr>
+        <tr><td>Tullamore</td><td>79 Kč</td></tr>
+        <tr><td>Tequila</td><td>79 Kč</td></tr>
+        <tr><td>Ron Zapaca Contenario 23 let</td><td>159 Kč</td></tr>
+        <tr><td>Diplomatico Reserva 12 let</td><td>149 Kč</td></tr>
+        <tr><td>Pampero Añejo Aniversario</td><td>139 Kč</td></tr>
+        <tr><td>Legendario 7 let</td><td>139 Kč</td></tr>
+        <tr><td>Ron Barcelo Imperial</td><td>129 Kč</td></tr>
+        <tr><td>Havana Club 7 let</td><td>129 Kč</td></tr>
+      </table>
+    </div>
+
+    <div class="info-card">
+      <div class="menu-category-title" style="margin-top: 0;">Nealko nápoje</div>
+      <table class="menu-table">
+        <tr><td>0,3 l Kofola</td><td>49 Kč</td></tr>
+        <tr><td>0,3 l Coca-cola / light</td><td>49 Kč</td></tr>
+        <tr><td>0,3 l Fanta</td><td>49 Kč</td></tr>
+        <tr><td>0,3 l Sprite</td><td>49 Kč</td></tr>
+        <tr><td>0,3 l Tonic</td><td>49 Kč</td></tr>
+        <tr><td>0,2 l Džusy Cappy - dle nabídky</td><td>52 Kč</td></tr>
+        <tr><td>0,25 l Red Bull</td><td>70 Kč</td></tr>
+      </table>
+    </div>
+
+    <div class="info-card">
+      <div class="menu-category-title" style="margin-top: 0;">Káva a teplé nápoje</div>
+      <table class="menu-table">
+        <tr><td>Turecká káva</td><td>49 Kč</td></tr>
+        <tr><td>Espresso / Lungo / Ristretto</td><td>49 Kč</td></tr>
+        <tr><td>Espresso Macchiato</td><td>49 Kč</td></tr>
+        <tr><td>Espresso Dopio Dvojté</td><td>79 Kč</td></tr>
+        <tr><td>Caffé Latte</td><td>79 Kč</td></tr>
+        <tr><td>Capuccino M/L</td><td>69 Kč / 79 Kč</td></tr>
+        <tr><td>Flat White</td><td>89 Kč</td></tr>
+        <tr><td>Vídeňská káva</td><td>79 Kč</td></tr>
+        <tr><td>Alžírská káva</td><td>89 Kč</td></tr>
+        <tr><td>Frappé ledová káva</td><td>89 Kč</td></tr>
+        <tr><td>Ledová káva se zmrzlinou</td><td>89 Kč</td></tr>
+        <tr><td>Horká čokoláda se šlehačkou</td><td>79 Kč</td></tr>
+        <tr><td>Čaj DILMAH - dle nabídky</td><td>54 Kč</td></tr>
+        <tr><td>Čaj z čerstvého zázvoru, med</td><td>64 Kč</td></tr>
+      </table>
+    </div>
+
+    <div class="info-card">
+      <div class="menu-category-title" style="margin-top: 0;">Koktejly</div>
+      <table class="menu-table">
+        <tr><td>Mojito / Nealko</td><td>139 Kč / 99 Kč</td></tr>
+        <tr><td>Cuba Libre</td><td>139 Kč</td></tr>
+        <tr><td>Aperol Spritz</td><td>139 Kč</td></tr>
+        <tr><td>Hugo</td><td>139 Kč</td></tr>
+        <tr><td>Tequila Sunrise</td><td>139 Kč</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- 7. DŮLEŽITÉ INFORMACE -->
+  <div id="info-section" class="section-content">
+    <button class="btn-back" onclick="switchSection('info', 'back')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     </button>
     <h2 class="section-title" style="margin-top: 6px;">Důležité informace</h2>
@@ -643,7 +875,7 @@
     </div>
   </div>
 
-  <!-- 5.1 PODSEKCE: DRESSCODE -->
+  <!-- 7.1 PODSEKCE: DRESSCODE -->
   <div id="sub-dresscode-section" class="section-content">
     <button class="btn-back" onclick="switchSection('info', 'back')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -660,7 +892,7 @@
     </div>
   </div>
 
-  <!-- 5.2 PODSEKCE: PARKOVÁNÍ -->
+  <!-- 7.2 PARKOVÁNÍ -->
   <div id="sub-parking-section" class="section-content">
     <button class="btn-back" onclick="switchSection('info', 'back')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -679,7 +911,7 @@
     </div>
   </div>
 
-  <!-- 5.3 PODSEKCE: POHYB A ZÁBAVA -->
+  <!-- 7.3 POHYB A ZÁBAVA -->
   <div id="sub-movement-section" class="section-content">
     <button class="btn-back" onclick="switchSection('info', 'back')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
