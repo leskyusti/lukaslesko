@@ -368,16 +368,7 @@
         →
       </button>
 
-      <!-- Svatební hry -->
-      <button class="menu-btn" onclick="switchSection('games', 'next')">
-        <span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 12h4m-2-2v4m10-2a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm-6 4a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/></svg>
-          Svatební hry
-        </span>
-        →
-      </button>
-
-      <!-- Nové tlačítko Nápojový lístek -->
+      <!-- Nápojový lístek -->
       <button class="menu-btn" onclick="switchSection('drinks', 'next')">
         <span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3m6-3v3"/></svg>
@@ -666,99 +657,7 @@
     </div>
   </div>
 
-  <!-- 5. SVATEBNÍ HRY -->
-  <div id="games-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('home', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Svatební hry</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="menu-grid" style="margin-top: 10px;">
-      <button class="menu-btn" onclick="switchSubSection('sub-game-bouquet')">
-        <span>Kytice</span>
-        →
-      </button>
-      <button class="menu-btn" onclick="switchSubSection('sub-game-bottle')">
-        <span>Flaška</span>
-        →
-      </button>
-      <button class="menu-btn" onclick="switchSubSection('sub-game-tombola')">
-        <span>Svatební tombola</span>
-        →
-      </button>
-    </div>
-  </div>
-
-  <!-- 5.1 HRA: KYTICE -->
-  <div id="sub-game-bouquet-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('games', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Kytice</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="info-card">
-      <ul>
-        <li>Radka Ptáčková</li>
-        <li>Laura Němcová</li>
-        <li>Andy Culková</li>
-        <li>Šárka Špatná</li>
-        <li>Barča Nechutová</li>
-        <li>Emma Štětková</li>
-        <li>Týna Štajerová</li>
-        <li>Týna Dandová</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- 5.2 HRA: FLAŠKA -->
-  <div id="sub-game-bottle-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('games', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Flaška</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="info-card">
-      <ul>
-        <li>Tomáš Lesko</li>
-        <li>Ondra Pavlíček</li>
-        <li>Radek Urban Junior</li>
-        <li>Jirka Danda Junior</li>
-        <li>Honza Adam</li>
-        <li>Přemek Janota</li>
-        <li>Vojta Zámostný</li>
-        <li>Tomáš Prokop</li>
-        <li>Denis Procházka</li>
-        <li>Filip Šubík</li>
-        <li>Jakub Kopecký</li>
-        <li>Kryštof Bivalec</li>
-        <li>Pavel Kasprij</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- 5.3 HRA: SVATEBNÍ TOMBOLA -->
-  <div id="sub-game-tombola-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('games', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Svatební stírací los</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="info-card" style="text-align: center;">
-      <h3 style="justify-content: center; margin-bottom: 12px; font-size: 16px; text-transform: uppercase;">Pravidla hry</h3>
-      <p style="margin-bottom: 12px;">Stírací los si můžete zakoupit <strong>pouze u svědků</strong></p>
-      <p style="margin-bottom: 12px;">Los lze zakoupit za libovolnou částku</p>
-      <p style="margin-bottom: 16px;">Setři důkladně všechna políčka</p>
-      <div style="border-top: 1px dashed rgba(77, 166, 255, 0.3); padding-top: 12px; margin-top: 12px;">
-        <p style="font-weight: 700; color: var(--text-pure);">Pouze 3 stejné symboly vyhrávají</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 6. NÁPOJOVÝ LÍSTEK (Nová sekcja) -->
+  <!-- 5. NÁPOJOVÝ LÍSTEK -->
   <div id="drinks-section" class="section-content">
     <button class="btn-back" onclick="switchSection('home', 'back')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -850,9 +749,9 @@
     </div>
   </div>
 
-  <!-- 7. DŮLEŽITÉ INFORMACE -->
+  <!-- 6. DŮLEŽITÉ INFORMACE -->
   <div id="info-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('info', 'back')">
+    <button class="btn-back" onclick="switchSection('home', 'back')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     </button>
     <h2 class="section-title" style="margin-top: 6px;">Důležité informace</h2>
@@ -875,7 +774,7 @@
     </div>
   </div>
 
-  <!-- 7.1 PODSEKCE: DRESSCODE -->
+  <!-- 6.1 PODSEKCE: DRESSCODE -->
   <div id="sub-dresscode-section" class="section-content">
     <button class="btn-back" onclick="switchSection('info', 'back')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -887,12 +786,12 @@
       <p>Black Tie / Cocktail / Formal nejlépe ve světle modré (baby blue) či jiných odstínech modré.</p>
       <ul>
         <li><strong>Páni:</strong> Klasický černý/modrý formální oblek, bílá/modrá košile, modrá kravata nebo motýlek (modrý doplněk).</li>
-        <li><strong>Dámy:</strong> Šaty nejlépe ve světle modré (baby blue) či v jiných odstínech modré (dlouhé večerní šaty / koktejlky / vzdušné šaty) nebo oblek či kostýmek po vzoru mužských podmínek výše uvedených.</li>
+        <li><strong>Dámy:</strong> Šaty nejlépe ve světle modré (baby blue) dlouhé večerní šaty / koktejlky / vzdušné šaty nebo oblek či kostýmek po vzoru mužských podmínek výše uvedených.</li>
       </ul>
     </div>
   </div>
 
-  <!-- 7.2 PARKOVÁNÍ -->
+  <!-- 6.2 PARKOVÁNÍ -->
   <div id="sub-parking-section" class="section-content">
     <button class="btn-back" onclick="switchSection('info', 'back')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -911,7 +810,7 @@
     </div>
   </div>
 
-  <!-- 7.3 POHYB A ZÁBAVA -->
+  <!-- 6.3 POHYB A ZÁBAVA -->
   <div id="sub-movement-section" class="section-content">
     <button class="btn-back" onclick="switchSection('info', 'back')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -923,6 +822,15 @@
       <ul>
         <li>Pohyb osob je povolen v celém areálu / zahradě hotelu.</li>
         <li>Koupání se v přírodních biotopech je <strong>POVOLENO</strong>. (Plavky s sebou :D)</li>
+        <li style="margin-top: 10px;">Na zahradě je umístěna gentlemanská hra Cornhole.<br>
+        <strong>Cornhole – pravidla hry</strong><br>
+        Hráči hází sáčky na nakloněnou desku s otvorem. Cílem je dostat sáček do otvoru nebo co nejblíže k němu.<br><br>
+        🎯 Sáček v otvoru: 3 body<br>
+        🟡 Sáček na desce: 1 bod<br>
+        ❌ Sáček mimo desku: 0 bodů<br><br>
+        Hráči se střídají v hodech.<br>
+        Po každém kole se body sečtou a rozdíl bodů získá hráč/tým s vyšším skóre.<br>
+        Vyhrává hráč nebo tým, který jako první dosáhne 21 bodů.</li>
       </ul>
     </div>
   </div>
