@@ -104,10 +104,11 @@
   .ring { fill: none; stroke: var(--blue-accent); stroke-width: 2.4; }
 
   .eyebrow {
-    margin: 0 0 4px;
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic; font-weight: 700; font-size: 18px;
-    letter-spacing: 0.05em; color: var(--blue-accent);
+    margin: 0 0 8px;
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 600; font-size: 15px;
+    line-height: 1.5; color: var(--text-bright);
+    text-align: center;
   }
 
   .title {
@@ -116,12 +117,14 @@
     font-size: clamp(28px, 7vw, 34px);
     color: var(--text-pure); letter-spacing: 0.01em; line-height: 1.15;
     text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    text-align: center;
   }
 
   .date-sub {
     font-size: 13px; font-weight: 600; color: var(--blue-light);
     letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px;
     opacity: 0.9;
+    text-align: center;
   }
 
   .divider {
@@ -232,9 +235,9 @@
         <circle class="ring" cx="75" cy="30" r="21"/>
       </svg>
     </div>
-    <p class="eyebrow">Svatební víkend</p>
+    <p class="eyebrow">Čau, vítáme tě na naší svatbě! 🎉</p>
     <h1 class="title">Lukáš & Barbora</h1>
-    <div class="date-sub">15. 6. 2026</div>
+    <div class="date-sub">22. 8. 2026</div>
     <div class="divider" aria-hidden="true"></div>
 
     <div class="menu-grid">
@@ -262,11 +265,11 @@
         →
       </button>
 
-      <!-- Odkaz na tvůj stávající kvíz -->
-      <button class="menu-btn highlight" onclick="window.location.href='kviz.html'">
+      <!-- Odkaz na svatební kvíz -->
+      <button class="menu-btn highlight" onclick="window.location.href='https://svatebnihra.vercel.app/'">
         <span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          Svatební kvíz & Tajné heslo
+          Svatební kvíz!
         </span>
         →
       </button>
