@@ -4,12 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
-<!-- 🚀 Meta tagy pro náhled při sdílení odkazů -->
-<meta property="og:title" content="Lukáš & Barbora — Svatba 2026">
-<meta property="og:description" content="Nejlepší svatba roku je tady !">
-<meta property="og:image" content="https://lukaslesko.vercel.app/img_4225_1024.jpg">
-<meta property="og:type" content="website">
-
 <!-- 🚀 Podpora plnoobrazovkového režimu pro Android & iOS -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -19,7 +13,7 @@
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#06121e">
 
-<title>Lukáš a Barbora — Svatební rozcestník</title>
+<title>Lukáš a Barbora — Svatební kvíz</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Work+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -37,6 +31,9 @@
     --text-pure: #ffffff;
     --text-bright: #f0f7fc;
     --text-sub: #d0e4f5;
+    
+    --error-vivid: #ff6b6b;
+    --success-vivid: #39e6a3; 
     
     --sat-top: env(safe-area-inset-top, 0px);
     --sat-bottom: env(safe-area-inset-bottom, 0px);
@@ -62,7 +59,7 @@
 
   body {
     margin: 0;
-    padding: calc(30px + var(--sat-top)) 16px calc(50px + var(--sat-bottom));
+    padding: calc(40px + var(--sat-top)) 16px calc(60px + var(--sat-bottom));
     width: 100%; min-height: 100vh; min-height: 100dvh;
     display: flex; align-items: center; justify-content: center;
     font-family: 'Work Sans', system-ui, -apple-system, sans-serif;
@@ -71,12 +68,17 @@
     background: transparent;
   }
 
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap;
+  }
+
   .invitation {
     position: relative;
-    width: 100%; max-width: 440px;
+    width: 100%; max-width: 420px;
     background: linear-gradient(165deg, var(--card-start), var(--card-end) 85%);
     border-radius: 20px;
-    padding: 32px 20px 28px;
+    padding: 36px 24px 32px;
     text-align: center;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 0 1.5px rgba(77, 166, 255, 0.35);
     transform-style: preserve-3d;
@@ -89,10 +91,9 @@
     border-radius: 14px; pointer-events: none;
   }
 
-  /* Tlačítko zpět uvnitř sekcí */
   .btn-back {
     position: absolute; top: 20px; left: 20px;
-    width: 38px; height: 38px;
+    width: 40px; height: 40px;
     background-color: rgba(77, 166, 255, 0.1);
     border: 1px solid rgba(77, 166, 255, 0.3);
     border-radius: 50%;
@@ -101,205 +102,270 @@
     cursor: pointer;
     transition: all 0.2s ease;
     z-index: 10;
+    opacity: 0; visibility: hidden;
+    transform: translateX(10px);
   }
+  .btn-back.visible { opacity: 1; visibility: visible; transform: translateX(0); }
   .btn-back:active { background-color: rgba(77, 166, 255, 0.2); transform: scale(0.95); }
-  .btn-back svg { width: 18px; height: 18px; display: block; }
+  .btn-back svg { width: 20px; height: 20px; display: block; }
 
   .emblem {
-    width: 64px; margin: 0 auto 12px;
-    filter: drop-shadow(0 0 8px rgba(77, 166, 255, 0.5));
+    --closeness: 0;
+    width: 76px; margin: 0 auto 16px;
+    filter: drop-shadow(0 0 2px rgba(77, 166, 255, 0.2));
+    transition: filter 0.4s ease, transform 0.2s ease;
     cursor: pointer; user-select: none;
-    transition: transform 0.2s ease;
   }
   .emblem:active { transform: scale(0.92); }
-  .emblem svg { display: block; width: 100%; height: auto; }
-  .ring { fill: none; stroke: var(--blue-accent); stroke-width: 2.4; }
+  .emblem.joined { filter: drop-shadow(0 0 14px rgba(77, 166, 255, 0.8)); }
+  .emblem svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .ring {
+    fill: none; stroke: var(--blue-accent); stroke-width: 2.4;
+    transition: transform 0.7s cubic-bezier(.22,1,.36,1);
+  }
+  .ring-left  { transform: translateX(calc(var(--closeness) * -4.2px)); }
+  .ring-right { transform: translateX(calc(var(--closeness) * 4.2px)); }
 
   .eyebrow {
-    margin: 0 0 8px;
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 600; font-size: 15px;
-    line-height: 1.5; color: var(--text-bright);
-    text-align: center;
+    margin: 0 0 6px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-weight: 700; font-size: 20px;
+    letter-spacing: 0.05em; color: var(--blue-accent);
   }
 
   .title {
-    margin: 0 0 6px;
+    margin: 0 0 8px;
     font-family: 'Cormorant Garamond', serif; font-weight: 700;
-    font-size: clamp(28px, 7vw, 34px);
+    font-size: clamp(32px, 8.5vw, 38px);
     color: var(--text-pure); letter-spacing: 0.01em; line-height: 1.15;
     text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    text-align: center;
   }
 
-  .location-sub {
-    font-size: 13.5px;
-    font-weight: 500;
-    color: var(--text-sub);
-    margin-bottom: 12px;
-    line-height: 1.4;
-    text-align: center;
-  }
-  .location-sub strong {
-    color: var(--blue-light);
-    font-weight: 600;
-  }
-
-  .date-sub {
-    font-size: 13px; font-weight: 600; color: var(--blue-light);
-    letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px;
-    opacity: 0.9;
-    text-align: center;
+  .footer-left {
+    position: fixed;
+    left: calc(16px + env(safe-area-inset-left, 0px));
+    bottom: calc(12px + var(--sat-bottom));
+    font-size: 11px; font-weight: 500;
+    color: rgba(208, 228, 245, 0.5);
+    letter-spacing: 0.05em; z-index: 10; pointer-events: none;
   }
 
   .divider {
-    width: 80px; height: 2px; margin: 0 auto 20px;
+    width: 100px; height: 2px; margin: 0 auto 24px;
     background: linear-gradient(90deg, transparent, var(--blue-accent), transparent);
     position: relative;
   }
   .divider::after {
     content: ""; position: absolute; left: 50%; top: 50%;
-    width: 5px; height: 5px; background: var(--blue-accent);
+    width: 6px; height: 6px; background: var(--blue-accent);
     transform: translate(-50%,-50%) rotate(45deg);
     box-shadow: 0 0 6px var(--blue-accent);
   }
 
-  /* Hlavní menu (Rozcestník) */
-  .menu-grid {
-    display: flex; flex-direction: column; gap: 12px;
+  .progress {
+    display: flex; justify-content: center; flex-wrap: wrap;
+    gap: 8px; margin-bottom: 26px;
+  }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    border: 1.5px solid var(--blue-accent);
+    background: transparent;
+    position: relative;
+    transition: background 0.4s ease, transform 0.4s ease;
+  }
+  .dot.filled {
+    background: var(--blue-accent);
+    box-shadow: 0 0 8px var(--blue-glow);
+    animation: dotPop 0.45s ease;
+  }
+  @keyframes dotPop {
+    0% { transform: scale(1); }
+    45% { transform: scale(1.6); }
+    100% { transform: scale(1); }
   }
 
-  .menu-btn {
-    width: 100%; min-height: 52px; padding: 12px 18px;
+  .screen {
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  .screen.fade-out-left {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  .screen.fade-out-right {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  .screen.fade-in-right {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  .screen.fade-in-left {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  .intro-box {
     background: rgba(5, 15, 26, 0.65);
-    color: var(--text-bright);
     border: 1.5px solid rgba(77, 166, 255, 0.3);
-    border-radius: 12px;
-    font-family: 'Work Sans', sans-serif; font-size: 15px;
-    font-weight: 700; letter-spacing: 0.04em;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: space-between;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    border-radius: 14px; padding: 20px 18px; margin-bottom: 26px;
   }
-  .menu-btn span { display: flex; align-items: center; gap: 10px; }
-  .menu-btn svg { width: 18px; height: 18px; color: var(--blue-accent); }
-  .menu-btn:active { transform: scale(0.98); background: rgba(77, 166, 255, 0.15); border-color: var(--blue-accent); }
-
-  .menu-btn.highlight {
-    background: linear-gradient(180deg, #4da6ff, #1a8cff);
-    color: #ffffff; border: none;
-    box-shadow: 0 6px 20px rgba(26, 140, 255, 0.4);
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  .intro-text {
+    margin: 0 0 14px; font-size: 16px; font-weight: 500;
+    line-height: 1.6; color: var(--text-bright);
   }
-  .menu-btn.highlight svg { color: #ffffff; }
+  .intro-text:last-child { margin-bottom: 0; }
+  .highlight-blue { color: var(--blue-light); font-weight: 700; }
 
-  /* Sekce obsahu (skryté přepínání s plynulým přechodem) */
-  .section-content {
-    display: none; text-align: left;
-    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+  .step-counter {
+    margin: 0 0 8px; font-size: 13px; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--blue-accent);
   }
-  .section-content.active { display: block; }
 
-  .section-content.fade-out-left { opacity: 0; transform: translateX(-20px); }
-  .section-content.fade-out-right { opacity: 0; transform: translateX(20px); }
-  .section-content.fade-in-right { opacity: 0; transform: translateX(20px); }
-  .section-content.fade-in-left { opacity: 0; transform: translateX(-20px); }
-
-  .section-title {
+  .question {
+    margin: 0 0 24px;
     font-family: 'Cormorant Garamond', serif; font-size: 24px;
-    font-weight: 700; color: var(--text-pure); margin: 0 0 16px;
-    text-align: center;
+    font-weight: 700; line-height: 1.35; color: var(--text-pure);
   }
 
-  /* Harmonogram položky */
-  .timeline {
-    position: relative; padding-left: 20px; margin-left: 4px;
-    border-left: 2px solid rgba(77, 166, 255, 0.3);
-    display: flex; flex-direction: column; gap: 16px;
-  }
-  .timeline-item { position: relative; }
-  .timeline-item::before {
-    content: ""; position: absolute; left: -25.5px; top: 4px;
-    width: 9px; height: 9px; background: var(--blue-accent);
-    border-radius: 50%; box-shadow: 0 0 8px var(--blue-glow);
-  }
-  .t-time { font-size: 12px; font-weight: 800; color: var(--blue-accent); letter-spacing: 0.05em; text-transform: uppercase; }
-  .t-title { font-size: 15px; font-weight: 700; color: var(--text-pure); margin: 2px 0; }
+  #quiz-form { margin: 0; }
 
-  /* Poznámka k harmonogramu */
-  .timeline-note {
-    margin-top: 20px;
-    font-size: 12px;
+  input[type="text"] {
+    width: 100%; height: 52px;
+    background: rgba(0, 0, 0, 0.35); border: none;
+    border-bottom: 2.5px solid var(--blue-accent);
+    border-radius: 6px 6px 0 0;
+    color: var(--text-pure); font-family: 'Work Sans', sans-serif;
+    font-size: 18px; font-weight: 600; text-align: center;
+    padding: 0 14px; margin-bottom: 20px;
+    transition: border-color 0.25s ease, background 0.25s ease;
+    -webkit-appearance: none;
+  }
+  input[type="text"]::placeholder { color: rgba(208, 228, 245, 0.5); font-weight: 500; }
+  input[type="text"]:focus {
+    outline: none; border-bottom-color: var(--blue-light);
+    background: rgba(0, 0, 0, 0.5); box-shadow: 0 4px 12px var(--blue-glow);
+  }
+
+  .shake { animation: shake 0.4s ease; }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(5px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(3px); }
+  }
+
+  .btn-primary {
+    width: 100%; min-height: 54px; padding: 15px 20px;
+    background: linear-gradient(180deg, #4da6ff, #1a8cff);
+    color: #ffffff; border: none; border-radius: 10px;
+    font-family: 'Work Sans', sans-serif; font-size: 16px;
+    font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; box-shadow: 0 6px 20px rgba(26, 140, 255, 0.4);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .btn-primary:active { transform: scale(0.98); }
+
+  .btn-secondary {
+    width: 100%; min-height: 48px; padding: 12px 18px;
+    background: rgba(77, 166, 255, 0.1);
+    color: var(--blue-accent);
+    border: 1.5px solid rgba(77, 166, 255, 0.4);
+    border-radius: 10px;
+    font-family: 'Work Sans', sans-serif; font-size: 14px;
+    font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; margin-top: 14px;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  .btn-secondary:active { transform: scale(0.98); background: rgba(77, 166, 255, 0.18); }
+
+  /* 🔗 Styly pro malé tlačítko Zpět na úvodní stránku */
+  .btn-site-home {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 40px;
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.03);
     color: var(--text-sub);
-    opacity: 0.8;
-    line-height: 1.4;
-    text-align: center;
-    font-style: italic;
-    background: rgba(5, 15, 26, 0.4);
-    padding: 10px;
+    border: 1px solid rgba(208, 228, 245, 0.15);
     border-radius: 8px;
-    border: 1px dashed rgba(77, 166, 255, 0.2);
-  }
-
-  /* Karta míst / ubytování / info */
-  .info-card {
-    background: rgba(5, 15, 26, 0.65);
-    border: 1px solid rgba(77, 166, 255, 0.25);
-    border-radius: 10px; padding: 14px; margin-bottom: 10px;
-  }
-  .info-card h3 { margin: 0 0 6px; font-size: 15px; font-weight: 700; color: var(--blue-light); }
-  .info-card p { margin: 0; font-size: 13.5px; color: var(--text-sub); line-height: 1.4; }
-  .info-card ul { margin: 6px 0 0 16px; padding: 0; font-size: 13.5px; color: var(--text-sub); line-height: 1.4; }
-  .info-card li { margin-bottom: 4px; }
-  
-  /* Stylování pro iframe mapy */
-  .info-card iframe {
-    width: 100%;
-    height: 180px;
-    border-radius: 8px;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    border: 1px solid rgba(77, 166, 255, 0.3) !important;
-  }
-
-  /* Stylování pro nápojový lístek tabulku */
-  .menu-table {
-    width: 100%;
-    border-collapse: collapse;
+    font-family: 'Work Sans', sans-serif;
     font-size: 13px;
-    color: var(--text-sub);
-  }
-  .menu-table td {
-    padding: 4px 0;
-    border-bottom: 1px dashed rgba(77, 166, 255, 0.15);
-  }
-  .menu-table td:last-child {
-    text-align: right;
     font-weight: 600;
-    color: var(--blue-light);
-    white-space: nowrap;
-    padding-left: 8px;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 14px;
+    transition: all 0.2s ease;
   }
-  .menu-category-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--blue-light);
-    margin: 14px 0 6px 0;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-bottom: 1px solid rgba(77, 166, 255, 0.3);
-    padding-bottom: 3px;
+  .btn-site-home:hover {
+    background: rgba(77, 166, 255, 0.08);
+    color: var(--text-pure);
+    border-color: rgba(77, 166, 255, 0.3);
   }
-
-  .footer-left {
-    position: fixed; left: 16px; bottom: 12px;
-    font-size: 11px; font-weight: 500; color: rgba(208, 228, 245, 0.4);
-    letter-spacing: 0.05em; pointer-events: none; z-index: 10;
+  .btn-site-home:active {
+    transform: scale(0.98);
   }
 
-  /* 🌟 Třídy pro jiskřičky a toast */
+  .error {
+    margin: 16px 0 0;
+    font-family: 'Work Sans', sans-serif; font-weight: 700; font-size: 15.5px;
+    color: var(--error-vivid); text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    display: none; line-height: 1.4;
+  }
+
+  .hint-btn {
+    display: inline-block; margin-top: 20px;
+    padding: 10px 14px; background: none; border: none;
+    color: var(--blue-accent); font-family: 'Work Sans', sans-serif;
+    font-size: 15px; font-weight: 700; text-decoration: underline;
+    text-underline-offset: 4px; cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .hint-box {
+    display: none; max-width: 300px; margin: 18px auto 0;
+    padding: 16px 20px; background: #eef7ff; color: #041424;
+    border-radius: 10px; border: 2px solid var(--blue-accent);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    font-family: 'Work Sans', sans-serif; font-weight: 700;
+    font-size: 17px; line-height: 1.45;
+  }
+
+  #result-section .result-title {
+    margin: 4px 0 10px;
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: clamp(40px, 9.5vw, 48px); font-weight: 700;
+    color: var(--blue-light); text-shadow: 0 2px 8px rgba(77, 166, 255, 0.4);
+  }
+
+  .result-text { margin: 0 0 16px; font-size: 16px; font-weight: 500; line-height: 1.6; color: var(--text-sub); }
+
+  .secret-box {
+    position: relative; padding: 24px 20px;
+    background: rgba(4, 14, 24, 0.85); border-radius: 12px;
+    border: 1.5px solid var(--blue-accent);
+    box-shadow: inset 0 0 15px rgba(77, 166, 255, 0.15);
+  }
+
+  .secret-label {
+    margin: 0 0 12px; font-size: 12px; font-weight: 800;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue-accent);
+  }
+
+  .secret-code {
+    margin: 0 0 14px;
+    font-family: 'Cormorant Garamond', serif; font-weight: 700;
+    font-size: 25px; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--text-pure); text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  }
+
+  .secret-note { margin: 0; font-size: 14.5px; font-weight: 500; line-height: 1.55; color: var(--text-sub); }
+
   .toast {
     position: fixed; top: 24px; left: 50%;
     transform: translateX(-50%) translateY(-80px);
@@ -320,10 +386,79 @@
     pointer-events: none; z-index: 9999;
     animation: sparkleAnim 0.7s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
   }
+  .sparkle.success {
+    background: #ffffff;
+    box-shadow: 0 0 10px var(--success-vivid), 0 0 16px #d6ffe6;
+  }
   @keyframes sparkleAnim {
     0% { transform: translate(0, 0) scale(1.4); opacity: 1; }
     100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
   }
+
+  /* 🎉 CSS pro Konfety */
+  .confetti-canvas {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 9998; display: none;
+  }
+  .confetti-canvas.show { display: block; }
+
+  /* 💡 CSS pro Pulzující nápovědu */
+  .hint-btn.pulsate {
+    animation: hintPulsate 1s ease-in-out infinite;
+    background: rgba(77, 166, 255, 0.15);
+    border-radius: 8px;
+    transform: scale(1.05);
+  }
+  @keyframes hintPulsate {
+    0% { box-shadow: 0 0 0 0 rgba(77, 166, 255, 0.6); }
+    70% { box-shadow: 0 0 0 12px rgba(77, 166, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(77, 166, 255, 0); }
+  }
+
+  /* 🏆 CSS pro Bodování a Ranking */
+  .ranking-box { margin: 16px 0 20px; border-color: var(--success-vivid); box-shadow: inset 0 0 15px rgba(57, 230, 163, 0.15); }
+  .ranking-label { font-size: 13px; font-weight: 700; color: var(--success-vivid); text-transform: uppercase; letter-spacing: 0.1em; }
+  .ranking-value { font-family: 'Cormorant Garamond', serif; font-size: clamp(24px, 6vw, 28px); font-weight: 700; color: var(--text-pure); margin-top: 4px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+  .errors-label { font-size: 12px; color: var(--text-sub); opacity: 0.8; margin-top: 8px; }
+
+  /* 🔄 CSS pro Hrát znova */
+  .btn-play-again {
+    margin-top: 16px;
+    background: rgba(5, 15, 26, 0.5);
+    color: var(--text-bright); border: 2px solid rgba(208, 228, 245, 0.3);
+    border-radius: 10px; font-size: 14px; min-height: 44px;
+  }
+  .btn-play-again:active { background: rgba(5, 15, 26, 0.7); }
+
+  /* 💬 CSS pro Zanechání vzkazu */
+  .message-box { margin-top: 26px; text-align: left; }
+  .message-label { font-size: 15px; font-weight: 700; color: var(--text-bright); margin-bottom: 8px; display: block; }
+  .message-textarea {
+    width: 100%; height: 90px;
+    background: rgba(0, 0, 0, 0.35); border: 1.5px solid rgba(77, 166, 255, 0.35);
+    border-radius: 10px; color: var(--text-pure); font-family: 'Work Sans', sans-serif;
+    font-size: 14px; padding: 10px; resize: none; margin-bottom: 12px;
+    transition: all 0.2s ease;
+  }
+  .message-textarea::placeholder { color: rgba(208, 228, 245, 0.4); }
+  .message-textarea:focus { outline: none; border-color: var(--blue-accent); box-shadow: 0 0 10px var(--blue-glow); }
+  .btn-submit-message {
+    width: 100%; min-height: 48px;
+    font-size: 14px; font-weight: 700; letter-spacing: 0.05em;
+    background: rgba(77, 166, 255, 0.15); color: var(--blue-accent);
+    border: 2px solid var(--blue-accent); border-radius: 10px;
+  }
+  .btn-submit-message:active { background: rgba(77, 166, 255, 0.25); }
+
+  /* 📲 CSS pro Tlačítko pro sdílení */
+  .btn-share {
+    margin-top: 14px; margin-bottom: 14px;
+    background: linear-gradient(180deg, #32d997, #28b883);
+    box-shadow: 0 6px 20px rgba(40, 184, 131, 0.4);
+    border-radius: 10px;
+  }
+  .btn-share:active { transform: scale(0.98); box-shadow: 0 3px 10px rgba(40, 184, 131, 0.4); }
+
 </style>
 </head>
 <body>
@@ -331,709 +466,598 @@
 <div class="toast" id="toast">Čau tady Lukáš :-) Objevil jsi tajné tlačítko, super !</div>
 
 <div class="invitation" id="card">
-  
-  <!-- HLAVNÍ ROZCESTNÍK -->
-  <div id="home-section" class="section-content active">
-    <div class="emblem" id="emblem" title="Co se stane, když sem 5× klikneš? 😉">
-      <svg viewBox="0 0 120 60">
-        <circle class="ring" cx="45" cy="30" r="21"/>
-        <circle class="ring" cx="75" cy="30" r="21"/>
-      </svg>
-    </div>
-    <p class="eyebrow">Ahoj, vítáme tě na naší svatbě! 🎉</p>
-    <h1 class="title">Lukáš & Barbora</h1>
-    <div class="location-sub">
-      <strong>Hotel Racek</strong><br>
-      Levínská 134, 411 45 Úštěk
-    </div>
-    <div class="date-sub">22. 8. 2026</div>
-    <div class="divider" aria-hidden="true"></div>
+  <!-- ⬅️ Tlačítko zpět -->
+  <button type="button" class="btn-back" id="back-btn" title="Předchozí otázka / Úvod">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+  </button>
 
-    <div class="menu-grid">
-      <!-- Důležité informace - ikona vykřičníku -->
-      <button class="menu-btn" onclick="switchSection('info', 'next')">
-        <span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          Důležité informace
-        </span>
-        →
-      </button>
-
-      <button class="menu-btn" onclick="switchSection('schedule', 'next')">
-        <span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-          Časový harmonogram
-        </span>
-        →
-      </button>
-
-      <!-- Ubytování - ikona domečku -->
-      <button class="menu-btn" onclick="switchSection('sleep', 'next')">
-        <span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          Ubytování
-        </span>
-        →
-      </button>
-
-      <!-- Zasedací pořádek - ikona židle -->
-      <button class="menu-btn" onclick="switchSection('seating', 'next')">
-        <span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"/><path d="M3 11h18v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2z"/><path d="M5 15v5"/><path d="M19 15v5"/></svg>
-          Zasedací pořádek
-        </span>
-        →
-      </button>
-
-      <!-- Nápojový lístek -->
-      <button class="menu-btn" onclick="switchSection('drinks', 'next')">
-        <span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3m6-3v3"/></svg>
-          Nápojový lístek
-        </span>
-        →
-      </button>
-      
-      <!-- Průvodce areálem (pod nápojovým lístkem) -->
-      <button class="menu-btn" onclick="switchSection('map', 'next')">
-        <span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          Průvodce areálem
-        </span>
-        →
-      </button>
-
-      <!-- Odkaz na svatební kvíz -->
-      <button class="menu-btn highlight" onclick="openQuiz()">
-        <span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-          Svatební kvíz!
-        </span>
-        →
-      </button>
-    </div>
+  <div class="emblem" id="emblem" title="Co se stane, když sem 5× klikneš? 😉">
+    <svg viewBox="0 0 120 60">
+      <circle class="ring ring-left" cx="45" cy="30" r="21"/>
+      <circle class="ring ring-right" cx="75" cy="30" r="21"/>
+    </svg>
   </div>
 
-  <!-- 1. HARMONOGRAM -->
-  <div id="schedule-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('home', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Svatební program</h2>
-    <div class="divider" aria-hidden="true"></div>
+  <p class="eyebrow">Svatební kvíz</p>
+  <h1 class="title">Lukáš & Barbora</h1>
+  <div class="divider" aria-hidden="true"></div>
 
-    <div class="timeline">
-      <div class="timeline-item">
-        <div class="t-time">11:00</div>
-        <div class="t-title">Příjezd hostů</div>
-      </div>
-      <div class="timeline-item">
-        <div class="t-time">12:00</div>
-        <div class="t-title">Obřad</div>
-      </div>
-      <div class="timeline-item">
-        <div class="t-time">13:00</div>
-        <div class="t-title">Skupinové focení</div>
-      </div>
-      <div class="timeline-item">
-        <div class="t-time">13:45</div>
-        <div class="t-title">Slavnostní hostina</div>
-      </div>
-      <div class="timeline-item">
-        <div class="t-time">15:00</div>
-        <div class="t-title">Krájení dortu</div>
-      </div>
-      <div class="timeline-item">
-        <div class="t-time">15:30</div>
-        <div class="t-title">Rozvazování svatební kytice / láhve</div>
-      </div>
-      <div class="timeline-item">
-        <div class="t-time">16:30</div>
-        <div class="t-title">Hry a volná zábava</div>
-      </div>
-      <div class="timeline-item">
-        <div class="t-time">18:30</div>
-        <div class="t-title">První tanec</div>
-      </div>
-      <div class="timeline-item">
-        <div class="t-time">20:30</div>
-        <div class="t-title">Párty</div>
-      </div>
-    </div>
+  <div class="progress" id="progress" style="display: none;" aria-hidden="true"></div>
 
-    <div class="timeline-note">
-      Poznámka: Uvedené časy jsou pouze orientační. Lukáš s Bárou si vyhrazují právo na změnu programu :-)
+  <!-- 1. ÚVODNÍ OBRAZOVKA -->
+  <div id="intro-section" class="screen">
+    <div class="intro-box">
+      <p class="intro-text">Čau, vítáme tě na naší svatbě! 🎉</p>
+      <p class="intro-text">Připravili jsme pro Vás krátký zábavný kvíz. Vyřešte <span class="highlight-blue">několik záludných hádanek</span> a na konci na Vás čeká <span class="highlight-blue">speciální překvapení!</span> 🍹</p>
     </div>
+    <button type="button" class="btn-primary" id="start-btn">Spustit kvíz →</button>
+    <button type="button" class="btn-secondary" id="resume-btn" style="display: none;">Pokračovat (Otázka 1)</button>
+    
+    <!-- 🔗 Tlačítko pro návrat na úvodní stránku -->
+    <a href="https://lukaslesko.vercel.app/" class="btn-site-home">Zpět na úvodní stránku</a>
   </div>
 
-  <!-- 2. PRŮVODCE AREÁLEM -->
-  <div id="map-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('home', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Průvodce areálem</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="info-card">
-      <h3>📍 Mapa areálu Hotelu Racek</h3>
-      <p style="margin-bottom: 8px;">Prohlédněte si polohu hotelu a svatebního areálu na mapě:</p>
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2579.5!2d14.325!3d50.582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47097b00021764cf%3A0x19219e3c2e2c68d1!2zSG9ybsOtIFN0cmFrxa92IG1sw71u!5e0!3m2!1scs!2scz!4v1786534216451!5m2!1scs!2scz" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  <!-- 2. HERNÍ SEKCE -->
+  <div id="game-section" class="screen" style="display: none;">
+    <div id="question-block">
+      <p class="step-counter" id="step-counter">Příprava...</p>
+      <p class="question" id="question-text">Načítám otázku...</p>
     </div>
 
-    <div class="info-card">
-      <h3>🌿 Svatební park</h3>
-      <p>Rozlehlý a klidný park v přírodě Českého středohoří hned za hotelem s nádhernými výhledy na horu Sedlo.</p>
-    </div>
-    <div class="info-card">
-      <h3>💍 Místo pro obřad</h3>
-      <p>Prostor pod širým nebem se svatební bránou a výhledem na horu Sedlo.</p>
-    </div>
-    <div class="info-card">
-      <h3>⛺ Svatební stan</h3>
-      <p>Velký stan s kapacitou až pro 100 lidí, s neomezenými možnostmi uspořádání – vejde se do něj raut i kapela.</p>
-    </div>
-    <div class="info-card">
-      <h3>🍹 Venkovní bar</h3>
-      <p>Nachází se hned vedle svatebního stanu pro žíznivé svatebčany. Tady platí <strong>tajné heslo</strong> z kvízu na drink zdarma!</p>
-    </div>
-    <div class="info-card">
-      <h3>💧 Biotop</h3>
-      <p>Křišťálově průzračné přírodní jezírko s přírodní filtrací vody v horní části parku, které slouží k letnímu osvěžení a koupání.</p>
-    </div>
-    <div class="info-card">
-      <h3>🌊 Dolní část parku</h3>
-      <p>Tuto část lemuje Loubní potok, u kterého jsou vybudované malé rybníky a mostky.</p>
-    </div>
-    <div class="info-card">
-      <h3>🍃 Odpočinkové zóny</h3>
-      <p>Po celém parku jsou různě rozmístěna místa k sezení, relaxaci a chladivá vodní mlha pro horké dny.</p>
-    </div>
-    <div class="info-card">
-      <h3>🐑 Zábava a okolí</h3>
-      <p>V parku se nacházejí také ovečky a dětské hřiště.</p>
-    </div>
-    <div class="info-card">
-      <h3>🏡 Propojení s mlýnem</h3>
-      <p>Areál je spojen se stylově zrekonstruovaným Horním Strakovým mlýnem, který leží hned vedle svatebního parku (cca 1 minuta pěšky).</p>
-    </div>
+    <form id="quiz-form" action="javascript:void(0);">
+      <label class="visually-hidden" for="answer-input">Tvoje odpověď</label>
+      <input type="text" id="answer-input" placeholder="Tvoje odpověď..." autocomplete="off" enterkeyhint="go" required>
+      <button type="submit" class="btn-primary">Odemknout →</button>
+    </form>
+
+    <p class="error" id="error-msg" role="alert"></p>
+
+    <!-- 💡 HTML Pulzující nápověda -->
+    <button type="button" class="hint-btn" id="hint-btn">Potřebujete nápovědu?</button>
+    <div class="hint-box" id="hint-box"></div>
   </div>
 
-  <!-- 3. UBYTOVÁNÍ -->
-  <div id="sleep-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('home', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Ubytování hostů</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="info-card">
-      <h3>Užitečné info</h3>
-      <p style="margin-bottom: 8px;">🗝️ <strong>Check-in:</strong> Klíče od pokojů budou k vyzvednutí na recepci od 11:00 hodin, kam si můžete zároveň odložit své věci. Plný přístup do pokojů bude možný až od 16:00 hodin.</p>
-      <p style="margin-bottom: 8px;">🧳 <strong>Check-out:</strong> Klíče od pokojů prosím vraťte na recepci v neděli do 11:00 hodin.</p>
-      <p style="margin-bottom: 8px;">Nezapomeňte také uhradit svou útratu na baru.</p>
-      <p style="margin: 0; text-align: center; font-weight: 600; color: var(--blue-light);">❤️ Děkujeme!</p>
+  <!-- 3. VÝSLEDEK -->
+  <div id="result-section" class="screen" style="display: none;">
+    <h2 class="result-title">Gratulujeme!</h2>
+    <!-- Upravený text -->
+    <p class="result-text">Dokázal/a jsi to — všechny hádanky jsou úspěšně vyřešené.</p>
+    
+    <!-- 🏆 HTML pro Bodování a Ranking -->
+    <div class="secret-box ranking-box">
+      <p class="ranking-label">Tvoje hodnocení hosta</p>
+      <p class="ranking-value" id="ranking-value">Hledám...</p>
+      <p class="errors-label" id="errors-count-label">(0 chyb)</p>
     </div>
+
+    <div class="secret-box">
+      <p class="secret-label">Tajné heslo na bar</p>
+      <p class="secret-code">Racek přistál</p>
+      <p class="secret-note">Řekněte tohle heslo barmanovi/barmance a dostanete speciální svatební drink zdarma! 🍹</p>
+    </div>
+
+    <!-- 📲 HTML pro Tlačítko pro sdílení -->
+    <button type="button" class="btn-primary btn-share" id="share-btn">Zdvojnásobit Wow! (Sdílet výsledek) 🚀</button>
+
+    <!-- 💬 HTML pro Zanechání vzkazu -->
+    <div class="message-box">
+      <label for="message-text" class="message-label">Napište novomanželům přání ❤️</label>
+      <textarea id="message-text" class="message-textarea" placeholder="Napište vzkaz, který si Lukáš a Barbora přečtou po svatbě..."></textarea>
+      <button type="button" class="btn-submit-message" id="submit-message-btn">Odeslat přání novomanželům 💌</button>
+    </div>
+
+    <!-- 🔄 HTML pro Hrát znova -->
+    <button type="button" class="btn-play-again" id="play-again-btn">Vymazat postup / Hrát znova 🔄</button>
   </div>
-
-  <!-- 4. ZASEDACÍ POŘÁDEK -->
-  <div id="seating-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('home', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Zasedací pořádek</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="menu-grid" style="margin-top: 10px;">
-      <button class="menu-btn" onclick="switchSubSection('sub-table1')">
-        <span>Stůl 1</span>
-        →
-      </button>
-      <button class="menu-btn" onclick="switchSubSection('sub-table2')">
-        <span>Stůl 2</span>
-        →
-      </button>
-      <button class="menu-btn" onclick="switchSubSection('sub-table3')">
-        <span>Stůl 3</span>
-        →
-      </button>
-      <button class="menu-btn" onclick="switchSubSection('sub-table4')">
-        <span>Stůl 4</span>
-        →
-      </button>
-      <button class="menu-btn" onclick="switchSubSection('sub-table5')">
-        <span>Stůl 5</span>
-        →
-      </button>
-      <button class="menu-btn" onclick="switchSubSection('sub-table6')">
-        <span>Stůl 6</span>
-        →
-      </button>
-    </div>
-  </div>
-
-  <!-- 4.1 STŮL 1 -->
-  <div id="sub-table1-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('seating', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Stůl 1.</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="info-card">
-      <ul>
-        <li>Roman</li>
-        <li>Tereza</li>
-        <li>Jozefína</li>
-        <li>Ingrid</li>
-        <li>Viktor</li>
-        <li>Jana</li>
-        <li>Leona</li>
-        <li>Miroslav</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- 4.2 STŮL 2 -->
-  <div id="sub-table2-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('seating', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Stůl 2.</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="info-card">
-      <ul>
-        <li>Marie</li>
-        <li>Babička Jarmila</li>
-        <li>Markéta</li>
-        <li>Radek</li>
-        <li>Radek</li>
-        <li>Nikola</li>
-        <li>Matěj</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- 4.3 STŮL 3 -->
-  <div id="sub-table3-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('seating', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Stůl 3.</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="info-card">
-      <ul>
-        <li>Jiří</li>
-        <li>Lenka</li>
-        <li>Kristýna</li>
-        <li>Ondřej</li>
-        <li>Jirka</li>
-        <li>Dana</li>
-        <li>Děda Jiří</li>
-        <li>Děda Michal</li>
-        <li>Babička Marcela</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- 4.4 STŮL 4 -->
-  <div id="sub-table4-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('seating', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Stůl 4.</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="info-card">
-      <ul>
-        <li>Eliška B.</li>
-        <li>Andrea</li>
-        <li>Šárka</li>
-        <li>Přemek</li>
-        <li>Barbora</li>
-        <li>Eliška K.</li>
-        <li>Hugo</li>
-        <li>Fotograf</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- 4.5 STŮL 5 -->
-  <div id="sub-table5-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('seating', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Stůl 5.</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="info-card">
-      <ul>
-        <li>Adriana</li>
-        <li>Radka</li>
-        <li>Emma</li>
-        <li>Kristýna</li>
-        <li>Svědek Tomáš</li>
-        <li>Jan</li>
-        <li>Svědkyně Lindsay</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- 4.6 STŮL 6 -->
-  <div id="sub-table6-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('seating', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Stůl 6.</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="info-card">
-      <ul>
-        <li>Denis</li>
-        <li>Jiří</li>
-        <li>Vojtěch</li>
-        <li>Tomáš P.</li>
-        <li>Tomáš S.</li>
-        <li>Filip</li>
-        <li>Jakub</li>
-        <li>Kryštof</li>
-        <li>Pavel</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- 5. NÁPOJOVÝ LÍSTEK -->
-  <div id="drinks-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('home', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Nápojový lístek</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="info-card" style="border: 1.5px solid var(--blue-accent); background: rgba(77, 166, 255, 0.08);">
-      <h3 style="justify-content: center; color: var(--text-pure); margin-bottom: 8px;">ZDARMA</h3>
-      <ul style="list-style: none; margin: 0; padding: 0; text-align: center;">
-        <li style="margin-bottom: 4px;">Pivo SVIJANY 11°</li>
-        <li style="margin-bottom: 4px;">Prosecco</li>
-        <li style="margin-bottom: 4px;">Limonáda Bezina / Malina</li>
-        <li style="margin-bottom: 4px;">Džus pomeranč / jablko</li>
-        <li>Karafa s vodou + citron</li>
-      </ul>
-    </div>
-
-    <!-- Okénko Bar Budget s aktualizovaným textem -->
-    <div class="info-card" style="border: 1.5px solid rgba(77, 166, 255, 0.4); background: rgba(5, 15, 26, 0.85);">
-      <h3 style="justify-content: center; color: var(--blue-light); margin-bottom: 8px; text-align: center;">🍹 BAR BUDGET</h3>
-      <p style="text-align: center; margin-bottom: 10px;">Prvních 10 000 Kč na baru je na nás!<br>(každý cca 2 drinky)<br>Až se budget vyčerpá, žezlo přebírá vaše peněženka. 😂</p>
-      <p style="text-align: center; font-size: 12.5px; opacity: 0.9; border-top: 1px dashed rgba(77, 166, 255, 0.2); padding-top: 8px; margin-top: 8px;">
-        Platit na baru lze POUZE v hotovosti. Útratu lze také psát na virtuální lístek na číslo Vašeho pokoje, který zaplatíte druhý den ráno při odevzdávání klíčů na recepci.
-      </p>
-    </div>
-
-    <div class="info-card">
-      <div class="menu-category-title" style="margin-top: 0;">Lihoviny 4cl</div>
-      <table class="menu-table">
-        <tr><td>Vodka Finlandia</td><td>69 Kč</td></tr>
-        <tr><td>Beefeater</td><td>79 Kč</td></tr>
-        <tr><td>Metaxa</td><td>79 Kč</td></tr>
-        <tr><td>Jägermeister</td><td>79 Kč</td></tr>
-        <tr><td>Becherovka</td><td>79 Kč</td></tr>
-        <tr><td>Havana rum</td><td>79 Kč</td></tr>
-        <tr><td>Bacardi</td><td>79 Kč</td></tr>
-        <tr><td>Fernet / Citrus</td><td>64 Kč</td></tr>
-        <tr><td>Slivovice Jelínek</td><td>64 Kč</td></tr>
-        <tr><td>Vodka / Rum / Peprmint / Griotka</td><td>54 Kč</td></tr>
-        <tr><td>Slivovice Žufánek</td><td>79 Kč</td></tr>
-        <tr><td>Vaječný likér</td><td>54 Kč</td></tr>
-        <tr><td>Jelzin</td><td>54 Kč</td></tr>
-        <tr><td>Jameson</td><td>79 Kč</td></tr>
-        <tr><td>Tullamore</td><td>79 Kč</td></tr>
-        <tr><td>Tequila</td><td>79 Kč</td></tr>
-        <tr><td>Ron Zapaca Contenario 23 let</td><td>159 Kč</td></tr>
-        <tr><td>Diplomatico Reserva 12 let</td><td>149 Kč</td></tr>
-        <tr><td>Pampero Añejo Aniversario</td><td>139 Kč</td></tr>
-        <tr><td>Legendario 7 let</td><td>139 Kč</td></tr>
-        <tr><td>Ron Barcelo Imperial</td><td>129 Kč</td></tr>
-        <tr><td>Havana Club 7 let</td><td>129 Kč</td></tr>
-      </table>
-    </div>
-
-    <div class="info-card">
-      <div class="menu-category-title" style="margin-top: 0;">Nealko nápoje</div>
-      <table class="menu-table">
-        <tr><td>0,3 l Kofola</td><td>49 Kč</td></tr>
-        <tr><td>0,3 l Coca-cola / light</td><td>49 Kč</td></tr>
-        <tr><td>0,3 l Fanta</td><td>49 Kč</td></tr>
-        <tr><td>0,3 l Sprite</td><td>49 Kč</td></tr>
-        <tr><td>0,3 l Tonic</td><td>49 Kč</td></tr>
-        <tr><td>0,2 l Džusy Cappy - dle nabídky</td><td>52 Kč</td></tr>
-        <tr><td>0,25 l Red Bull</td><td>70 Kč</td></tr>
-      </table>
-    </div>
-
-    <div class="info-card">
-      <div class="menu-category-title" style="margin-top: 0;">Káva a teplé nápoje</div>
-      <table class="menu-table">
-        <tr><td>Turecká káva</td><td>49 Kč</td></tr>
-        <tr><td>Espresso / Lungo / Ristretto</td><td>49 Kč</td></tr>
-        <tr><td>Espresso Macchiato</td><td>49 Kč</td></tr>
-        <tr><td>Espresso Dopio Dvojté</td><td>79 Kč</td></tr>
-        <tr><td>Caffé Latte</td><td>79 Kč</td></tr>
-        <tr><td>Capuccino M/L</td><td>69 Kč / 79 Kč</td></tr>
-        <tr><td>Flat White</td><td>89 Kč</td></tr>
-        <tr><td>Vídeňská káva</td><td>79 Kč</td></tr>
-        <tr><td>Alžírská káva</td><td>89 Kč</td></tr>
-        <tr><td>Frappé ledová káva</td><td>89 Kč</td></tr>
-        <tr><td>Ledová káva se zmrzlinou</td><td>89 Kč</td></tr>
-        <tr><td>Horká čokoláda se šlehačkou</td><td>79 Kč</td></tr>
-        <tr><td>Čaj DILMAH - dle nabídky</td><td>54 Kč</td></tr>
-        <tr><td>Čaj z čerstvého zázvoru, med</td><td>64 Kč</td></tr>
-      </table>
-    </div>
-
-    <div class="info-card">
-      <div class="menu-category-title" style="margin-top: 0;">Koktejly</div>
-      <table class="menu-table">
-        <tr><td>Mojito / Nealko</td><td>139 Kč / 99 Kč</td></tr>
-        <tr><td>Cuba Libre</td><td>139 Kč</td></tr>
-        <tr><td>Aperol Spritz</td><td>139 Kč</td></tr>
-        <tr><td>Hugo</td><td>139 Kč</td></tr>
-        <tr><td>Tequila Sunrise</td><td>139 Kč</td></tr>
-      </table>
-    </div>
-  </div>
-
-  <!-- 6. DŮLEŽITÉ INFORMACE -->
-  <div id="info-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('home', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Důležité informace</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <!-- Podmenu uvnitř Důležitých informací -->
-    <div class="menu-grid" style="margin-top: 10px;">
-      <button class="menu-btn" onclick="switchSubSection('sub-dresscode')">
-        <span>Dresscode</span>
-        →
-      </button>
-      <button class="menu-btn" onclick="switchSubSection('sub-ceremony')">
-        <span>Obřad</span>
-        →
-      </button>
-      <button class="menu-btn" onclick="switchSubSection('sub-photos')">
-        <span>Fotografování / natáčení videa</span>
-        →
-      </button>
-      <button class="menu-btn" onclick="switchSubSection('sub-parking')">
-        <span>Kde zaparkovat</span>
-        →
-      </button>
-      <button class="menu-btn" onclick="switchSubSection('sub-movement')">
-        <span>Pohyb a zábava</span>
-        →
-      </button>
-      <button class="menu-btn" onclick="switchSubSection('sub-contacts')">
-        <span>Kontakt</span>
-        →
-      </button>
-    </div>
-  </div>
-
-  <!-- 6.1 PODSEKCE: DRESSCODE -->
-  <div id="sub-dresscode-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('info', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Dresscode</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="info-card">
-      <p style="margin-bottom: 8px;">🎩 <strong>Dress Code:</strong> Black Tie / Cocktail / Formal</p>
-      <p style="margin-bottom: 12px; color: var(--blue-light);">💙 Nejlépe ve světle modré (baby blue) či jiných odstínech modré.</p>
-      <ul style="list-style: none; margin: 0 0 14px 0; padding: 0;">
-        <li style="margin-bottom: 8px;">👔 <strong>Páni:</strong> Klasický černý/modrý formální oblek, bílá/modrá košile, modrá kravata nebo motýlek – zkrátka modrý doplněk.</li>
-        <li>👗 <strong>Dámy:</strong> Šaty nejlépe ve světle modré (baby blue) 💙 – dlouhé večerní šaty, koktejlky, vzdušné šaty nebo oblek či kostýmek po vzoru mužských podmínek výše uvedených.</li>
-      </ul>
-      
-      <div style="border-top: 1px dashed rgba(77, 166, 255, 0.25); padding-top: 12px; margin-top: 12px;">
-        <p style="margin-bottom: 8px;">🌿 <strong>Pozor na obuv</strong></p>
-        <p style="margin-bottom: 8px;">Nezapomeňte, že se naše svatba koná v parku, kde přibližně 80 % povrchu tvoří tráva. 🌱</p>
-        <p style="margin-bottom: 8px;">Prosíme proto, při výběru obuvi myslete nejen na eleganci, ale hlavně na pohodlí a vhodnost do trávy.</p>
-        <p style="margin-bottom: 8px;">Dámy, tenké vysoké podpatky mohou mít v trávě svůj vlastní názor na stabilitu. 😄</p>
-        <p style="margin-bottom: 12px;">Klínky, širší podpatky nebo elegantní pohodlné boty budou určitě lepší volbou.</p>
-      </div>
-
-      <div style="border-top: 1px dashed rgba(77, 166, 255, 0.25); padding-top: 12px; margin-top: 12px;">
-        <p style="margin-bottom: 8px;">Po formálnější části svatby se můžete klidně převléknout do pohodlnějšího oblečení a užít si večer naplno. 🕺💃</p>
-        <p style="margin-bottom: 10px;">Prosíme jen, aby i večerní outfit zůstal alespoň trochu elegantní a formální.</p>
-        <p style="margin: 0; font-weight: 500; color: var(--blue-light);">A podle počasí nezapomeňte také na něco teplejšího na večer.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 6.2 PODSEKCE: OBŘAD -->
-  <div id="sub-ceremony-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('info', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Obřad</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="info-card">
-      <h3 style="text-align: center; margin-bottom: 10px;">📵 Během obřadu prosíme bez mobilů</h3>
-      <p style="margin-bottom: 10px;">Milí hosté,</p>
-      <p style="margin-bottom: 10px;">máme na vás malou prosbu – během obřadu prosím nefotografujte ani nenatáčejte na mobilní telefony. ❤️</p>
-      <p style="margin-bottom: 10px;">Na svatbě máme našeho fotografa, který se postará o všechny důležité okamžiky. Kdyby se v uličkách objevily desítky mobilů, mohlo by to pokazit jeho záběry a hlavně naše vzpomínky na tento okamžik. 📸</p>
-      <p style="margin-bottom: 10px;">Po obřadu ale mobilní telefony směle vytáhněte! 😄</p>
-      <p style="margin-bottom: 10px;">Foťte, natáčejte, sdílejte a spamujte nás fotkami, co to jen půjde. Po obřadu je focení povinné! 😂❤️</p>
-      <p style="margin-top: 12px; font-weight: 600; text-align: center;">Děkujeme, že si obřad užijete s námi naplno – bez mobilu v ruce. 🥰</p>
-    </div>
-  </div>
-
-  <!-- 6.3 PODSEKCE: FOTOGRAFOVÁNÍ / NATÁČENÍ VIDEA -->
-  <div id="sub-photos-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('info', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Fotografování / natáčení videa</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="info-card" style="text-align: center; margin-bottom: 12px;">
-      <h3 style="justify-content: center; text-transform: uppercase; margin-bottom: 6px;">Jeden fotograf vše nezachytí</h3>
-      <p style="text-align: center; font-size: 13px; font-weight: 600; color: var(--blue-light);">Pomozte nám uchovat vzpomínky i z vašeho pohledu</p>
-      
-      <ul style="list-style: none; padding: 0; margin: 14px 0 0 0; text-align: center; font-size: 13.5px;">
-        <li style="margin-bottom: 6px;">Klepněte na zobrazený odkaz</li>
-        <li style="margin-bottom: 6px;">Otevře se sdílená složka Google Fotky</li>
-        <li style="margin-bottom: 6px;">Klikněte na tlačítko ,,Přidat fotky''</li>
-        <li style="margin-bottom: 6px;">Vyberte fotografie a videa, která chcete přidat</li>
-        <li>Potvrďte nahrání a je HOTOVO!</li>
-      </ul>
-    </div>
-
-    <!-- Tlačítko na Google Disk -->
-    <div style="margin-bottom: 14px; text-align: center;">
-      <a href="https://photos.app.goo.gl/GHBBxrnJ9uDAP6LR7" target="_blank" class="menu-btn highlight" style="justify-content: center; text-decoration: none; display: flex; align-items: center;">
-        <span>👉 Otevřít Google Disk s fotkami</span>
-      </a>
-    </div>
-
-    <div class="info-card" style="margin-bottom: 12px;">
-      <h3 style="margin-bottom: 8px;">📸 Sdílejte s námi vaše fotky a videa!</h3>
-      <p style="margin-bottom: 8px;">Máte z naší svatby fotku nebo video, které by nám nemělo uniknout? Pošlete nám ho! ❤️</p>
-      <p style="margin-bottom: 8px;">Vytvořil jsem společný Google Disk, kam můžete nahrát všechny své povedené (i nepovedené 😄) fotky a videa ze svatby.</p>
-      <p style="margin-bottom: 8px;">Čím víc vzpomínek od vás budeme mít, tím lépe! 🥰</p>
-      <p style="margin: 0; font-weight: 600;">Děkujeme, že s námi budete sdílet náš velký den. ❤️</p>
-    </div>
-
-    <div class="info-card">
-      <h3 style="margin-bottom: 8px;">📱 Návod pro ty, kteří si s Google Diskem úplně netykají 😄</h3>
-      <p style="margin-bottom: 6px;">1. Klikněte na odkaz na Google Disk výše.</p>
-      <p style="margin-bottom: 6px;">2. Otevře se vám složka s našimi svatebními fotkami a videi.</p>
-      <p style="margin-bottom: 6px;">3. Najděte tlačítko „+ Nový“ nebo „Nahrát soubory“.</p>
-      <p style="margin-bottom: 6px;">4. Vyberte z telefonu nebo počítače fotky a videa, která chcete sdílet.</p>
-      <p style="margin-bottom: 8px;">5. Chvilku počkejte, než se soubory nahrají. U větších videí to může chvíli trvat.</p>
-      <p style="margin-bottom: 10px; font-weight: 600; color: var(--text-pure);">A je to! 🎉 Fotky se automaticky objeví ve společné složce a my se k nim později dostaneme.</p>
-      
-      <p style="margin-bottom: 6px; font-weight: 600; color: var(--blue-light);">📱 Pokud nahráváte z mobilu:</p>
-      <p style="margin-bottom: 8px;">Po otevření odkazu můžete být vyzváni k přihlášení ke Google účtu. Pokud ho nemáte, dejte nám vědět – vymyslíme jiný způsob, jak nám vaše poklady dostat. 😄</p>
-      
-      <p style="margin-bottom: 10px; font-size: 12.5px; background: rgba(77,166,255,0.1); padding: 8px; border-radius: 6px;">
-        💡 <strong>Tip:</strong> Klidně nahrajte i fotky, které už máte na Instagramu nebo Facebooku. Originály z telefonu jsou ale ještě lepší! 📸❤️
-      </p>
-
-      <p style="text-align: center; font-weight: 700; margin-top: 12px; color: var(--text-pure); letter-spacing: 0.05em;">D Ě K U J E M E !</p>
-    </div>
-  </div>
-
-  <!-- 6.4 PARKOVÁNÍ -->
-  <div id="sub-parking-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('info', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Kde zaparkovat</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="info-card">
-      <p>Rodina parkuje u budovy <strong>"Horní Strakův mlýn"</strong> mapa zde:</p>
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2292.618328211717!2d14.325881741815014!3d50.58204011534066!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47097b00021764cf%3A0x19219e3c2e2c68d1!2zSG9ybsOtIFN0cmFrxa92IG1sw71u!5e1!3m2!1scs!2scz!4v1786534216451!5m2!1scs!2scz" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-      
-      <br><br><br>
-      
-      <p>Všichni ostatní parkují na ploše zahrady, kam se dostanete tímto vjezdem z ulice:</p>
-      <iframe src="https://www.google.com/maps/embed?pb=!4v1786554526227!6m8!1m7!1swtMM9xb-qAa5ESBcW8Diag!2m2!1d50.58308056895507!2d14.32665667895038!3f197.19036320720699!4f-10.07538133071499!5f0.4000000000000002" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-    </div>
-
-    <!-- Nová sekce: Odvoz ze svatby -->
-    <div class="info-card" style="margin-top: 10px;">
-      <h3 style="color: var(--blue-light); margin-bottom: 8px;">🚗 Odvoz ze svatby</h3>
-      <p style="margin-bottom: 8px;">Milí hosté,</p>
-      <p style="margin-bottom: 8px;">rádi bychom vás upozornili, že ze svatby nebude zajištěn hromadný odvoz domů.</p>
-      <p style="margin-bottom: 10px;">Pokud tedy plánujete po svatbě odjet a nebudete na místě ubytováni, prosíme, zajistěte si prosím odvoz individuálně.</p>
-      <p style="margin: 0; font-weight: 500; color: var(--text-pure);">Děkujeme za pochopení a věříme, že si s námi svatební den užijete až do poslední písničky. ❤️🥂</p>
-    </div>
-  </div>
-
-  <!-- 6.5 POHYB A ZÁBAVA -->
-  <div id="sub-movement-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('info', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Pohyb a zábava</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="info-card">
-      <p style="margin-bottom: 12px;">🚬 Kouření v celém areálu je <strong>POVOLENO</strong>, jen prosím neodhazujte nedopalky na trávník či jinam do volného prostoru, ale do koše.</p>
-      <p style="margin-bottom: 12px;">🌿 Pohyb osob je <strong>POVOLEN</strong> v celém areálu / zahradě hotelu.</p>
-      <p style="margin-bottom: 14px;">🏊 Koupání v přírodních biotopech je <strong>POVOLENO</strong>. (Plavky s sebou :D) 🩱😄</p>
-      
-      <div style="border-top: 1px dashed rgba(77, 166, 255, 0.25); padding-top: 12px; margin-top: 12px;">
-        <h3 style="color: var(--blue-light); margin-bottom: 6px;">Hra Cornhole</h3>
-        <p style="margin-bottom: 8px;">Na zahradě bude umístěna gentlemanská hra Cornhole (pokud to počasí dovolí).</p>
-        <p style="font-weight: 600; color: var(--text-pure); margin-bottom: 6px;">Pravidla hry:</p>
-        <p style="margin-bottom: 8px;">Hráči hází sáčky na nakloněnou desku s otvorem. Cílem je dostat sáček do otvoru nebo co nejblíže k němu.</p>
-        
-        <div style="background: rgba(77, 166, 255, 0.08); padding: 8px 10px; border-radius: 6px; margin-bottom: 8px;">
-          <p style="margin-bottom: 3px;">🎯 <strong>Sáček v otvoru:</strong> 3 body</p>
-          <p style="margin-bottom: 3px;">🟡 <strong>Sáček na desce:</strong> 1 bod</p>
-          <p style="margin: 0;">❌ <strong>Sáček mimo desku:</strong> 0 bodů</p>
-        </div>
-
-        <p style="margin: 0;">Hráči se střídají v hodech. Po každém kole se body sečtou a rozdíl bodů získá hráč/tým s vyšším skóre. Vyhrává hráč nebo tým, který jako první dosáhne 21 bodů.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 6.6 KONTAKT -->
-  <div id="sub-contacts-section" class="section-content">
-    <button class="btn-back" onclick="switchSection('info', 'back')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <h2 class="section-title" style="margin-top: 6px;">Kontakt</h2>
-    <div class="divider" aria-hidden="true"></div>
-
-    <div class="info-card" style="text-align: center;">
-      <p style="margin-bottom: 12px; font-size: 15px;">
-        <strong>Lukáš</strong><br>
-        +420 730 549 třistapadesát
-      </p>
-      <p style="margin: 0;">
-        ig: <a href="https://www.instagram.com/leskyxx/" target="_blank" rel="noopener noreferrer" style="color: var(--blue-accent); text-decoration: none; font-weight: 600;">
-          Instagram
-        </a>
-      </p>
-    </div>
-  </div>
-
 </div>
 
 <div class="footer-left">© 2026 Lukáš Lesko</div>
 
+<!-- 🎉 HTML pro Konfety -->
+<canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+
 <script>
   // ==========================================
-  // ZVUKOVÉ EFEKTY (Web Audio API)
+  // LOGIKA KVÍZU
+  // ==========================================
+  
+  const QUESTIONS = [
+    {
+      question: "Ve kterém roce jsme byli na naší první společné dovolené?",
+      hint: "Rhodos",
+      answers: ["2024", "dva tisíce dvacet čtyři", "dvatisícedvacetčtyři", "dva tisice dvacet ctyri", "dvatisicedvacetctyri"]
+    },
+    {
+      question: "Jak se jmenuje místo, kde proběhlo naše seznámení?",
+      hint: "Kněz bude vědět.",
+      answers: ["chata", "chalupa", "dolní zálezly", "dolni zalezly", "zálezly", "zalezly"]
+    },
+    {
+      question: "Kolik dětí se nachází na svatbě?",
+      hint: "No, jen počítej",
+      answers: ["0", "nula", "žádný", "zadny", "žádné", "zadne", "žádní", "zadni"]
+    },
+    {
+      question: "Kdy má Lukáš narozeniny?",
+      hint: "Má 31 dní a jeho poslední den patří strašidlům. 👻",
+      answers: [
+        "29. 10. 1994", "29.10.1994", "29. 10. 1994.", "29.10. 1994",
+        "říjen", "rijen", "v říjnu", "v rijnu", "29. října", "29. rijna",
+        "29 října", "29 rijna", "1994", "29. října 1994", "29. října1994",
+        "29.října1994", "29 října 1994", "29101994", "29 10 1994",
+        "29.10.94", "29 10 94", "94", "29. října 94", "29. října94",
+        "29.října94", "29 října 94"
+      ]
+    },
+    {
+      question: "Kolikáté výročí tento rok oslavíme?",
+      hint: "√9 + 5 − 5 = 3",
+      answers: ["3", "3.", "třetí", "3. výročí", "tři", "tri"]
+    },
+    {
+      question: "Jaký měsíc a rok jsme se zasnoubili?",
+      hint: "",
+      answers: [
+        "6. měsíc 2025", "6. mesic 2025", "červen 2025", "cerven 2025", 
+        "6. 2025", "6/2025", "06/2025", "06.2025", "6 2025", "62025", 
+        "červen 25", "cerven 25", "červen25", "cerven25", "minulý rok v červnu", 
+        "minuly rok v cervnu", "6.25", "6. 25", "6 25", "625", "06 2025", 
+        "06 25", "06. 2025", "06/25", "6/25"
+      ]
+    },
+    {
+      question: "Kolik je na svatbě svatebčanů?",
+      hint: "Jen počítej... (všechny)",
+      answers: ["51", "padesát jedna", "padesat jedna", "51 svatebčanů", "51 svatebcanu"]
+    },
+    {
+      question: "Jak se jmenuje svědkyně nevěsty?",
+      hint: "Lohan",
+      answers: ["lindsay", "lindsy", "lin"]
+    },
+    {
+      question: "Jakému sportu se věnoval ženich v dětství?",
+      hint: "No ? přemejšlej nebo se zeptej...",
+      answers: ["hokejbal", "hokejbalu", "hokec"]
+    },
+    {
+      question: "Kolik sourozenců má ženich?",
+      hint: "Ale notaaak.",
+      answers: ["1", "jeden", "jednoho", "tomáš", "tomas", "tom", "tomáše", "tomase"]
+    },
+    {
+      question: "Na jaký hudební nástroj hrála v dětství Nevěsta?",
+      hint: "Klarinet ani Flašinet to není",
+      answers: ["na flétnu", "flétnu", "flétna", "na fletnu", "fletnu", "fletna"]
+    },
+    {
+      question: "Jakou barvu očí má Nevěsta?",
+      hint: "Pozor, ať tě s nima neprobodne!",
+      answers: ["modrá", "modra", "modrý", "modry", "modré", "modre", "blue", "modrošedá", "modroseda", "modro-šedá", "modro-seda", "šedá", "seda", "modrošedivé", "modrosedive", "šedé", "sede", "modrá šedá", "modra seda"]
+    },
+    {
+      question: "V jakém zaměstnání pracuje Ženich? (pozice)",
+      hint: "192.168.1.0",
+      answers: ["it", "it technik", "technik", "internet", "internetový technik", "internetovy technik", "pc technik"]
+    },
+    {
+      question: "Jméno firmy (zaměstnavatele) ve které působí nevěsta?",
+      hint: "Energie",
+      answers: ["centropol", "centropol energy"]
+    },
+    {
+      question: "Na jakou střední školu chodil Ženich?",
+      hint: "Lodní šroub",
+      answers: ["spsul", "spšul", "resslovka", "reslovka", "resslova 5", "střední průmyslová škola resslova 5", "stredni průmyslova skola resslova 5", "střední průmyslová škola", "stredni průmyslova skola", "střední průmyslová škola resslova", "stredni průmyslova skola resslova"]
+    }
+  ];
+
+  let currentStep = parseInt(localStorage.getItem('lb_wq_step') || '0', 10);
+  let quizStarted = localStorage.getItem('lb_wq_started') === 'true';
+
+  let errorsCount = parseInt(localStorage.getItem('lb_wq_errors') || '0', 10);
+  let hintPulsateTimer = null;
+
+  const els = {
+    introSection: document.getElementById('intro-section'),
+    gameSection: document.getElementById('game-section'),
+    resultSection: document.getElementById('result-section'),
+    startBtn: document.getElementById('start-btn'),
+    resumeBtn: document.getElementById('resume-btn'),
+    progress: document.getElementById('progress'),
+    counter: document.getElementById('step-counter'),
+    question: document.getElementById('question-text'),
+    form: document.getElementById('quiz-form'),
+    input: document.getElementById('answer-input'),
+    error: document.getElementById('error-msg'),
+    hintBtn: document.getElementById('hint-btn'),
+    hintBox: document.getElementById('hint-box'),
+    emblem: document.getElementById('emblem'),
+    backBtn: document.getElementById('back-btn'),
+    dots: []
+  };
+
+  const ERROR_MESSAGES = [
+    "Dej si lok drinku a zkus to znova! 🍸",
+    "Špatně! Běž se zeptat k sousednímu stolu. 🤫",
+    "Vedle jak ta jedle! Ženich i nevěsta tě sledují... 👀",
+    "Auuu, těsně vedle! Zkus zapojit mozkové závity. 🧠",
+    "Mimo! Možná je čas dát si panáka a zkusit to znovu? 🥃",
+    "Samá voda! Radši si běž tancovat. 💃"
+  ];
+
+  let lastErrorIndex = -1;
+  function getRandomError() {
+    let index;
+    do {
+      index = Math.floor(Math.random() * ERROR_MESSAGES.length);
+    } while (index === lastErrorIndex && ERROR_MESSAGES.length > 1);
+    lastErrorIndex = index;
+    return ERROR_MESSAGES[index];
+  }
+
+  function buildProgressDots() {
+    els.progress.innerHTML = '';
+    els.dots = [];
+    QUESTIONS.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+      els.progress.appendChild(dot);
+      els.dots.push(dot);
+    });
+  }
+
+  function updateUI(isComplete = false) {
+    const totalQ = QUESTIONS.length;
+    const progressFrac = isComplete ? 1 : (currentStep / totalQ);
+    els.emblem.style.setProperty('--closeness', progressFrac * totalQ);
+    
+    els.dots.forEach((dot, i) => dot.classList.toggle('filled', i < currentStep));
+    els.emblem.classList.toggle('joined', isComplete);
+    
+    if (quizStarted && currentStep >= 0 && currentStep < totalQ && !isComplete) {
+      els.backBtn.classList.add('visible');
+    } else {
+      els.backBtn.classList.remove('visible');
+    }
+  }
+
+  function transitionScreen(newLoadFn, direction = 'next') {
+    const activeSection = [els.introSection, els.gameSection, els.resultSection].find(s => s.style.display !== 'none');
+    
+    if (!activeSection) {
+      newLoadFn();
+      return;
+    }
+
+    const outClass = direction === 'next' ? 'fade-out-left' : 'fade-out-right';
+    const inClass = direction === 'next' ? 'fade-in-right' : 'fade-in-left';
+
+    activeSection.classList.add(outClass);
+
+    setTimeout(() => {
+      activeSection.style.display = 'none';
+      activeSection.classList.remove(outClass);
+      newLoadFn(); 
+      updateUI();
+
+      const newSection = [els.introSection, els.gameSection, els.resultSection].find(s => s.style.display !== 'none');
+      if (newSection) {
+        newSection.classList.add(inClass);
+        void newSection.offsetWidth;
+        newSection.classList.remove(inClass);
+      }
+    }, 800); 
+  }
+
+  function loadStep() {
+    updateUI();
+    const totalQ = QUESTIONS.length;
+    
+    resetHintPulsate();
+
+    if (!quizStarted) {
+      els.introSection.style.display = 'block';
+      els.gameSection.style.display = 'none';
+      els.progress.style.display = 'none';
+      els.resultSection.style.display = 'none';
+      els.backBtn.classList.remove('visible');
+      
+      if (currentStep > 0) {
+        els.resumeBtn.textContent = `Pokračovat (Otázka ${currentStep + 1})`;
+        els.resumeBtn.style.display = 'block';
+      } else {
+        els.resumeBtn.style.display = 'none';
+      }
+      return;
+    }
+
+    if (currentStep >= totalQ) {
+      const emblemRect = els.emblem.getBoundingClientRect();
+      createSparklesAt(emblemRect.left + emblemRect.width/2, emblemRect.top + emblemRect.height/2, 24, true); 
+      updateUI(true); 
+      playUISound('success'); 
+
+      startConfetti();
+      displayRanking();
+
+      els.gameSection.style.display = 'none';
+      els.introSection.style.display = 'none';
+      els.progress.style.display = 'none';
+      els.resultSection.style.display = 'block';
+      els.backBtn.classList.remove('visible'); 
+      
+      localStorage.removeItem('lb_wq_step'); 
+      localStorage.removeItem('lb_wq_started');
+      quizStarted = false; 
+      return;
+    }
+
+    els.introSection.style.display = 'none';
+    els.resultSection.style.display = 'none';
+    els.gameSection.style.display = 'block';
+    els.progress.style.display = 'flex';
+    
+    const q = QUESTIONS[currentStep];
+    els.counter.textContent = `Otázka ${currentStep + 1} • ${totalQ}`;
+    els.question.textContent = q.question;
+    els.input.value = '';
+    els.input.focus();
+    els.error.style.display = 'none';
+    els.hintBox.style.display = 'none';
+    els.hintBox.textContent = q.hint;
+    els.hintBtn.style.display = q.hint ? 'inline-block' : 'none';
+
+    if (q.hint) {
+      hintPulsateTimer = setTimeout(pulsateHint, 10000);
+    }
+  }
+
+  function normalize(str) {
+    return str.toString().toLowerCase().trim()
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "") 
+      .replace(/\s+/g, ''); 
+  }
+
+  function startQuiz() {
+    initAudio(); 
+    playUISound('click'); 
+    quizStarted = true;
+    localStorage.setItem('lb_wq_started', 'true');
+    transitionScreen(loadStep, 'next');
+  }
+
+  els.startBtn.addEventListener('click', () => {
+    currentStep = 0;
+    errorsCount = 0;
+    localStorage.setItem('lb_wq_step', '0');
+    localStorage.setItem('lb_wq_errors', '0');
+    startQuiz();
+  });
+  
+  els.resumeBtn.addEventListener('click', startQuiz); 
+
+  els.form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const q = QUESTIONS[currentStep];
+    const userAnswer = normalize(els.input.value);
+    const isCorrect = q.answers.some(ans => normalize(ans) === userAnswer);
+
+    resetHintPulsate();
+
+    if (isCorrect) {
+      const currentDot = els.dots[currentStep];
+      if (currentDot) {
+        const rect = currentDot.getBoundingClientRect();
+        createSparklesAt(rect.left + rect.width/2, rect.top + rect.height/2, 12, true);
+      }
+      playUISound('correct'); 
+
+      currentStep++;
+      localStorage.setItem('lb_wq_step', currentStep);
+      transitionScreen(loadStep, 'next');
+    } else {
+      errorsCount++;
+      localStorage.setItem('lb_wq_errors', errorsCount);
+
+      els.error.textContent = getRandomError();
+      els.error.style.display = 'block';
+      els.input.classList.remove('shake');
+      void els.input.offsetWidth; 
+      els.input.classList.add('shake');
+      els.input.focus();
+      playUISound('error'); 
+    }
+  });
+
+  els.backBtn.addEventListener('click', () => {
+    if (quizStarted) {
+      playUISound('click'); 
+      if (currentStep > 0) {
+        currentStep--;
+        localStorage.setItem('lb_wq_step', currentStep);
+        transitionScreen(loadStep, 'back');
+      } else {
+        quizStarted = false;
+        localStorage.setItem('lb_wq_started', 'false');
+        transitionScreen(loadStep, 'back');
+      }
+    }
+  });
+
+  els.hintBtn.addEventListener('click', () => {
+    resetHintPulsate();
+    els.hintBox.style.display = 'block';
+    els.hintBtn.style.display = 'none';
+    playUISound('click'); 
+  });
+
+  function pulsateHint() {
+    els.hintBtn.classList.add('pulsate');
+  }
+
+  function resetHintPulsate() {
+    if (hintPulsateTimer) clearTimeout(hintPulsateTimer);
+    els.hintBtn.classList.remove('pulsate');
+  }
+
+  // ==========================================
+  // 🐣 EASTER EGG (5× kliknutí na prstýnky)
+  // ==========================================
+  let emblemClicks = 0;
+  let emblemTimer = null;
+  els.emblem.addEventListener('click', () => {
+    emblemClicks++;
+    playUISound('click');
+    const rect = els.emblem.getBoundingClientRect();
+    createSparklesAt(rect.left + rect.width/2, rect.top + rect.height/2, 8, false);
+
+    if (emblemClicks >= 5) {
+      triggerEasterEgg();
+      emblemClicks = 0;
+    }
+
+    clearTimeout(emblemTimer);
+    emblemTimer = setTimeout(() => {
+      emblemClicks = 0;
+    }, 1500);
+  });
+
+  function triggerEasterEgg() {
+    playUISound('success');
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    startConfetti();
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 4000);
+  }
+
+  // ==========================================
+  // 🏆 BODOVÁNÍ A RANKING
+  // ==========================================
+  function displayRanking() {
+    const rankingValueEl = document.getElementById('ranking-value');
+    const errorsCountLabelEl = document.getElementById('errors-count-label');
+
+    errorsCountLabelEl.textContent = `(${errorsCount} ${errorsCount === 1 ? 'chyba' : errorsCount >= 2 && errorsCount <= 4 ? 'chyby' : 'chyb'})`;
+
+    let rank = "";
+    if (errorsCount === 0) {
+      rank = "Svatební král / královna 👑 (Perfektní skóre!)";
+    } else if (errorsCount <= 3) {
+      rank = "Skvělý host! 🌟 (Skvělá znalost novomanželů)";
+    } else if (errorsCount <= 7) {
+      rank = "Zvědavý host 🕵️‍♂️ (Zvládl jsi to se ctí)";
+    } else {
+      rank = "Veselý pařmen 🎉 (Hlavně že chutnal drink!)";
+    }
+    rankingValueEl.textContent = rank;
+  }
+
+  // ==========================================
+  // 📲 SDÍLENÍ A VZKAZY
+  // ==========================================
+  document.getElementById('share-btn').addEventListener('click', () => {
+    playUISound('click');
+    if (navigator.share) {
+      navigator.share({
+        title: 'Svatební kvíz — Lukáš & Barbora',
+        text: `Úspěšně jsem vyřešil/a svatební kvíz Lukáše a Barbory s ${errorsCount} chybami! Zvládneš to taky?`,
+        url: window.location.href
+      }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Odkaz na kvíz byl zkopírován do schránky!');
+    }
+  });
+
+  document.getElementById('submit-message-btn').addEventListener('click', () => {
+    const msg = document.getElementById('message-text').value.trim();
+    if (!msg) {
+      alert('Prosím, napište nejprve nějaký vzkaz.');
+      return;
+    }
+    playUISound('success');
+    alert('Děkujeme! Vaše přání bylo úspěšně odesláno novomanželům ❤️');
+    document.getElementById('message-text').value = '';
+  });
+
+  document.getElementById('play-again-btn').addEventListener('click', () => {
+    playUISound('click');
+    localStorage.clear();
+    location.reload();
+  });
+
+  // ==========================================
+  // ✨ EFEKTY (Jiskry & Konfety)
+  // ==========================================
+  function createSparklesAt(x, y, count = 12, isSuccess = false) {
+    for (let i = 0; i < count; i++) {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'sparkle' + (isSuccess ? ' success' : '');
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 40 + Math.random() * 80;
+      sparkle.style.setProperty('--dx', `${Math.cos(angle) * distance}px`);
+      sparkle.style.setProperty('--dy', `${Math.sin(angle) * distance}px`);
+      sparkle.style.left = `${x}px`;
+      sparkle.style.top = `${y}px`;
+      document.body.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 700);
+    }
+  }
+
+  function startConfetti() {
+    const canvas = document.getElementById('confetti-canvas');
+    canvas.classList.add('show');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+    for (let i = 0; i < 120; i++) {
+      particles.push({
+        x: canvas.width / 2,
+        y: canvas.height / 2,
+        vx: (Math.random() - 0.5) * 14,
+        vy: (Math.random() - 0.7) * 14 - 4,
+        size: Math.random() * 8 + 4,
+        color: ['#4da6ff', '#1a8cff', '#d6eeff', '#39e6a3', '#ffffff'][Math.floor(Math.random() * 5)],
+        rot: Math.random() * 360,
+        vrot: (Math.random() - 0.5) * 10
+      });
+    }
+
+    let animationId;
+    function loop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.35; // gravitace
+        p.rot += p.vrot;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.rot * Math.PI) / 180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+        ctx.restore();
+      });
+      particles = particles.filter(p => p.y < canvas.height + 50);
+      if (particles.length > 0) {
+        animationId = requestAnimationFrame(loop);
+      } else {
+        canvas.classList.remove('show');
+        cancelAnimationFrame(animationId);
+      }
+    }
+    loop();
+  }
+
+  // ==========================================
+  // 🐣 ZVUKOVÉ EFEKTY (Web Audio API)
   // ==========================================
   let audioCtx = null;
   function initAudio() {
@@ -1045,120 +1069,57 @@
   function playUISound(type) {
     initAudio();
     if (!audioCtx) return;
-    
     if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
+      audioCtx.resume();
     }
 
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
-    const now = audioCtx.currentTime;
     osc.connect(gain);
     gain.connect(audioCtx.destination);
-    
+
+    const now = audioCtx.currentTime;
+
     if (type === 'click') {
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(440, now);
-      osc.frequency.exponentialRampToValueAtTime(880, now + 0.05);
-      gain.gain.setValueAtTime(0.08, now);
+      osc.frequency.setValueAtTime(400, now);
+      gain.gain.setValueAtTime(0.05, now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
       osc.start(now);
       osc.stop(now + 0.05);
+    } else if (type === 'correct') {
+      osc.frequency.setValueAtTime(523.25, now); // C5
+      osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+      osc.start(now);
+      osc.stop(now + 0.25);
+    } else if (type === 'error') {
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(180, now);
+      osc.frequency.setValueAtTime(120, now + 0.1);
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+      osc.start(now);
+      osc.stop(now + 0.25);
     } else if (type === 'success') {
-      [523.25, 659.25, 783.99].forEach((freq, i) => {
+      const notes = [523.25, 659.25, 783.99, 1046.50];
+      notes.forEach((freq, idx) => {
         const o = audioCtx.createOscillator();
         const g = audioCtx.createGain();
         o.connect(g);
         g.connect(audioCtx.destination);
-        o.type = 'triangle';
-        o.frequency.setValueAtTime(freq, now + i * 0.08);
-        g.gain.setValueAtTime(0.1, now + i * 0.08);
-        g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.5);
-        o.start(now + i * 0.08);
-        o.stop(now + i * 0.08 + 0.5);
+        o.frequency.setValueAtTime(freq, now + idx * 0.08);
+        g.gain.setValueAtTime(0.08, now + idx * 0.08);
+        g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.3);
+        o.start(now + idx * 0.08);
+        o.stop(now + idx * 0.08 + 0.3);
       });
     }
   }
 
-  // ==========================================
-  // JISKŘIČKY A TAJNÉ TLAČÍTKO
-  // ==========================================
-  function createSparklesAt(x, y, count = 12, isSuccess = false) {
-    for (let i = 0; i < count; i++) {
-      const sparkle = document.createElement('div');
-      sparkle.className = 'sparkle' + (isSuccess ? ' success' : '');
-      sparkle.style.left = x + 'px';
-      sparkle.style.top = y + 'px';
-      
-      const angle = Math.random() * Math.PI * 2;
-      const distance = 40 + Math.random() * 70;
-      const dx = Math.cos(angle) * distance;
-      const dy = Math.sin(angle) * distance;
-      
-      sparkle.style.setProperty('--dx', dx + 'px');
-      sparkle.style.setProperty('--dy', dy + 'px');
-      
-      document.body.appendChild(sparkle);
-      setTimeout(() => sparkle.remove(), 700);
-    }
-  }
-
-  let emblemClicks = 0;
-  const emblem = document.getElementById('emblem');
-  const toast = document.getElementById('toast');
-
-  emblem.addEventListener('click', (e) => {
-    emblemClicks++;
-    playUISound('click');
-    const rect = emblem.getBoundingClientRect();
-    createSparklesAt(rect.left + rect.width / 2, rect.top + rect.height / 2, 10);
-
-    if (emblemClicks === 5) {
-      emblemClicks = 0;
-      playUISound('success');
-      createSparklesAt(rect.left + rect.width / 2, rect.top + rect.height / 2, 25, true);
-      toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 4000);
-    }
-  });
-
-  // ==========================================
-  // PŘEPÍNÁNÍ SEKCÍ S ANIMACÍ
-  // ==========================================
-  function switchSection(targetId, direction = 'next') {
-    initAudio();
-    playUISound('click');
-
-    const activeSection = document.querySelector('.section-content.active');
-    const targetSection = document.getElementById(targetId + '-section');
-
-    if (!activeSection || !targetSection || activeSection === targetSection) return;
-
-    const outClass = direction === 'next' ? 'fade-out-left' : 'fade-out-right';
-    const inClass = direction === 'next' ? 'fade-in-right' : 'fade-in-left';
-
-    activeSection.classList.add(outClass);
-
-    setTimeout(() => {
-      activeSection.classList.remove('active', outClass);
-      targetSection.classList.add('active', inClass);
-      void targetSection.offsetWidth;
-      targetSection.classList.remove(inClass);
-    }, 400);
-  }
-
-  function switchSubSection(subId) {
-    switchSection(subId, 'next');
-  }
-
-  function openQuiz() {
-    initAudio();
-    playUISound('click');
-    window.location.href = 'https://svatebnihra.vercel.app/';
-  }
+  // Inicializace při startu
+  buildProgressDots();
+  loadStep();
 </script>
-
 </body>
 </html>
